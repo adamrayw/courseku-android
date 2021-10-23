@@ -1,5 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'package:courseku_mobile/widgets/comment_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,16 @@ class DetailTutorial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget commentTiles() {
+      return Column(
+        children: const [
+          CommentTile(),
+          CommentTile(),
+          CommentTile(),
+        ],
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -104,7 +115,7 @@ class DetailTutorial extends StatelessWidget {
                             'Belajar Python Bahasa Indonesia [Versi Baru]',
                             style: headerTextStyle.copyWith(
                               fontSize: 18,
-                              fontWeight: medium,
+                              fontWeight: semiBold,
                             ),
                           ),
                           const SizedBox(
@@ -262,57 +273,7 @@ class DetailTutorial extends StatelessWidget {
               const SizedBox(
                 height: 26,
               ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          color: secondaryTextColor,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'A',
-                            style: headerTextStyle.copyWith(
-                              fontSize: 16,
-                              fontWeight: semiBold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Adam Ray Wibowo',
-                            style: headerTextStyle.copyWith(
-                                fontSize: 16, fontWeight: semiBold),
-                          ),
-                          Text(
-                            'So Helpfully!',
-                            style: secondaryTextStyle.copyWith(
-                              fontSize: 14,
-                              fontWeight: medium,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Text('1 month ago'),
-                    ],
-                  ),
-                ],
-              )
+              commentTiles()
             ],
           ),
         ),
