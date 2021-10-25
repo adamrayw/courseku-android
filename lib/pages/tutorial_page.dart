@@ -14,7 +14,7 @@ class TutorialPage extends StatelessWidget {
       return Container(
         child: Expanded(
           child: ListView(
-            children: [
+            children: const [
               ListTutorial(),
               ListTutorial(),
               ListTutorial(),
