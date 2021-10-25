@@ -1,6 +1,13 @@
-# courseku_mobile
+# COURSEKU Mobile
 
-A new Flutter project.
+COURSEKU will available for mobile.
+
+# Download COURSEKU Mobile
+- Soon!
+
+# UI Design
+You can see the design for COURSEKU Mobile, this design is not finished yet.
+- [Figma](https://www.figma.com/file/3QpuOrLDPobFBIii30RBHe/Untitled?node-id=12%3A74)
 
 ## Getting Started
 
