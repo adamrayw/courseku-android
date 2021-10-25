@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, avoid_unnecessary_containers
 
 import 'package:courseku_mobile/widgets/comment_tile.dart';
 import 'package:flutter/material.dart';
