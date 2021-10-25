@@ -1,6 +1,6 @@
 # COURSEKU Mobile
 
-COURSEKU will available for mobile.
+[http://courseku.herokuapp.com](COURSEKU) will available for mobile.
 
 # Download COURSEKU Mobile
 - Soon!
