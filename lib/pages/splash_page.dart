@@ -45,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
               ),
               Text(
                 'The best place to find Programming courses & tutorials',
-                style: GoogleFonts.poppins(
+                style: secondaryTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: light,
                 ),
