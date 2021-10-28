@@ -1,12 +1,26 @@
+import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
-class SignInPage extends StatelessWidget {
+class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
+
+  @override
+  State<SignInPage> createState() => _SignInPageState();
+}
+
+class _SignInPageState extends State<SignInPage> {
+  TextEditingController emailController = TextEditingController(text: '');
+
+  TextEditingController passwordController = TextEditingController(text: '');
+
+  bool isLoading = false;
 
   Widget emailInput() {
     return TextField(
+      controller: emailController,
       decoration: InputDecoration(
         hintText: 'Email',
         border: OutlineInputBorder(
@@ -22,6 +36,7 @@ class SignInPage extends StatelessWidget {
 
   Widget passwordInput() {
     return TextField(
+      controller: passwordController,
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -38,6 +53,43 @@ class SignInPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignIn() async {
+      setState(() {
+        isLoading = true;
+      });
+      if (await authProvider.login(
+        email: emailController.text,
+        password: passwordController.text,
+      )) {
+        Navigator.pushNamed(context, '/main');
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Color(0xff15D2A7),
+            content: Text(
+              'Login Berhasil!',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Color(0xffff0f0f),
+            content: Text(
+              'Login Gagal!',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -82,23 +134,26 @@ class SignInPage extends StatelessWidget {
                 height: 48,
                 width: double.infinity,
                 child: TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/main');
-                  },
+                  onPressed: handleSignIn,
                   style: TextButton.styleFrom(
                     backgroundColor: primaryTextColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6.0),
                     ),
                   ),
-                  child: Text(
-                    'Sign In',
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: bold,
-                    ),
-                  ),
+                  child: isLoading
+                      ? const CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2.0,
+                        )
+                      : Text(
+                          ' Sign Up',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
               const SizedBox(
