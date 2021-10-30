@@ -63,7 +63,8 @@ class _SignInPageState extends State<SignInPage> {
         email: emailController.text,
         password: passwordController.text,
       )) {
-        Navigator.pushNamed(context, '/main');
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/main', (Route<dynamic> route) => false);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Color(0xff15D2A7),
@@ -147,7 +148,7 @@ class _SignInPageState extends State<SignInPage> {
                           strokeWidth: 2.0,
                         )
                       : Text(
-                          ' Sign Up',
+                          'Sign In',
                           style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 16,
