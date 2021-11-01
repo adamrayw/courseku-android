@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    <uses-permission android:name="android.permission.INTERNET"/>
     package="com.example.courseku_mobile">
-   <application
+
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <application
         android:label="courseku_mobile"
         android:icon="@mipmap/ic_launcher">
         <activity
