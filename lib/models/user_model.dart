@@ -2,7 +2,7 @@ class UserModel {
   late String name;
   late String email;
   late int id;
-  late String token;
+  late String? token;
 
   UserModel({
     required this.name,
