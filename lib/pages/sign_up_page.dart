@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
           const SnackBar(
             backgroundColor: Color(0xffff0f0f),
             content: Text(
-              'Register Gagal!',
+              'Registration Failed!',
               textAlign: TextAlign.center,
             ),
           ),
@@ -144,9 +144,13 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           ),
           child: isLoading
-              ? const CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 2.0,
+              ? Text(
+                  'Logging in...',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 )
               : Text(
                   'Sign Up',
