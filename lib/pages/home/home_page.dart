@@ -60,57 +60,48 @@ class _HomePageState extends State<HomePage> {
 
     Widget programmingCarousel() {
       return Container(
-        height: 80,
-        width: double.infinity,
+        height: 154,
+        // color: Colors.amber,
         child: FutureBuilder<List<dynamic>>(
           future: fetchProg(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(8),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      children: [
-                        Container(
-                          width: 200,
-                          height: 64,
-                          margin: const EdgeInsets.only(right: 22),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            // color: Colors.red,
-                            border: Border.all(
-                              width: 0.5,
-                              color: secondaryTextColor,
-                            ),
-                            borderRadius: BorderRadius.circular(6.0),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.network(
-                                _img(snapshot.data[index]),
-                                width: 40,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                _name(snapshot.data[index]),
-                                style: headerTextStyle.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: regular,
-                                ),
-                              ),
-                            ],
-                          ),
+              return GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
+                ),
+                // padding: const EdgeInsets.all(8),
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(6.0),
+                    onTap: () {},
+                    child: Container(
+                      width: 64,
+                      // height: 56.89,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 22,
+                        vertical: 20,
+                      ),
+                      decoration: BoxDecoration(
+                        // color: Colors.red,
+                        border: Border.all(
+                          width: 0.5,
+                          color: secondaryTextColor,
                         ),
-                      ],
-                    );
-                  });
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      child: Image.network(
+                        _img(snapshot.data[index]),
+                        width: 1,
+                      ),
+                    ),
+                  );
+                },
+              );
             } else {
               return const Center(child: CircularProgressIndicator());
             }
@@ -121,57 +112,66 @@ class _HomePageState extends State<HomePage> {
 
     Widget coursesByField() {
       return Container(
-        height: 80,
-        width: double.infinity,
+        height: 154,
+        // color: Colors.amber,
         child: FutureBuilder<List<dynamic>>(
           future: fetchField(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
-              return ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: const EdgeInsets.all(8),
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      children: [
-                        Container(
-                          width: 200,
-                          height: 64,
-                          margin: const EdgeInsets.only(right: 22),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            // color: Colors.red,
-                            border: Border.all(
-                              width: 0.5,
-                              color: secondaryTextColor,
-                            ),
-                            borderRadius: BorderRadius.circular(6.0),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.network(
-                                _imgField(snapshot.data[index]),
-                                width: 40,
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                _nameField(snapshot.data[index]),
-                                style: headerTextStyle.copyWith(
-                                  fontSize: 18,
-                                  fontWeight: regular,
-                                ),
-                              ),
-                            ],
-                          ),
+              return GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
+                  childAspectRatio: 4 / 2,
+                ),
+                // padding: const EdgeInsets.all(8),
+                itemCount: snapshot.data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(6.0),
+                    onTap: () {},
+                    child: Container(
+                      width: 64,
+                      height: 20,
+                      // padding: const EdgeInsets.symmetric(
+                      //   horizontal: 12,
+                      //   vertical: 10,
+                      // ),
+                      decoration: BoxDecoration(
+                        // color: Colors.red,
+                        border: Border.all(
+                          width: 0.5,
+                          color: secondaryTextColor,
                         ),
-                      ],
-                    );
-                  });
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.network(
+                            _imgField(snapshot.data[index]),
+                            width: 28,
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            _nameField(
+                              snapshot.data[index],
+                            ),
+                            style: secondaryTextStyle.copyWith(
+                              fontSize: 16,
+                              fontWeight: medium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
             } else {
               return const Center(child: CircularProgressIndicator());
             }
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(top: 26, left: 18),
+              margin: const EdgeInsets.only(top: 26, left: 18, right: 18),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
