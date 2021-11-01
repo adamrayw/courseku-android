@@ -69,7 +69,7 @@ class _SignInPageState extends State<SignInPage> {
           const SnackBar(
             backgroundColor: Color(0xff15D2A7),
             content: Text(
-              'Login Berhasil!',
+              'Welcome Back!',
               textAlign: TextAlign.center,
             ),
           ),
@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
           const SnackBar(
             backgroundColor: Color(0xffff0f0f),
             content: Text(
-              'Login Gagal!',
+              'Login Failed!',
               textAlign: TextAlign.center,
             ),
           ),
@@ -143,9 +143,13 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                   child: isLoading
-                      ? const CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2.0,
+                      ? Text(
+                          'Logging in...',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
                         )
                       : Text(
                           'Sign In',
