@@ -5,6 +5,7 @@ import 'package:courseku_mobile/pages/home/home_page.dart';
 import 'package:courseku_mobile/pages/home/profile_page.dart';
 import 'package:courseku_mobile/pages/home/submit_page.dart';
 import 'package:courseku_mobile/theme.dart';
+import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -83,51 +84,13 @@ class _MainPageState extends State<MainPage> {
       }
     }
 
-    return Scaffold(
-      bottomNavigationBar: customButtonNav(),
-      // appBar: AppBar(
-      //   title: Row(
-      //     children: <Widget>[
-      //       Container(
-      //         width: 40,
-      //         height: 40,
-      //         decoration: const BoxDecoration(
-      //           shape: BoxShape.circle,
-      //           image: DecorationImage(
-      //             fit: BoxFit.fill,
-      //             image: NetworkImage('https://i.imgur.com/BoN9kdC.png'),
-      //           ),
-      //         ),
-      //       ),
-      //       const SizedBox(
-      //         width: 14,
-      //       ),
-      //       Text(
-      //         'Hi, Adam',
-      //         style: primaryTextStyle.copyWith(
-      //           fontSize: 18,
-      //           fontWeight: medium,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      //   automaticallyImplyLeading: false,
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0.0,
-      //   actions: <Widget>[
-      //     Row(
-      //       children: const [],
-      //     ),
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: Image.asset(
-      //         'assets/setting_icon.png',
-      //         width: 20,
-      //       ),
-      //     ),
-      //   ],
-      // ),
-      body: body(),
+    return DoubleBack(
+      message: "Press back again to close",
+      child: Scaffold(
+        bottomNavigationBar: customButtonNav(),
+        
+        body: body(),
+      ),
     );
   }
 }
