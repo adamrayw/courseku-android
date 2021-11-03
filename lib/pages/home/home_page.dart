@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -52,6 +53,11 @@ class _HomePageState extends State<HomePage> {
   String _imgField(dynamic dataFImg) {
     return dataFImg['img_url'];
   }
+
+  final List<String> imageList = [
+    "https://source.unsplash.com/700x200?coding",
+    "https://source.unsplash.com/700x200?programming",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +109,12 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return Container(
+                child: Text(
+                  'Loading Data...',
+                  style: secondaryTextStyle,
+                ),
+              );
             }
           },
         ),
@@ -173,7 +184,12 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             } else {
-              return const Center(child: CircularProgressIndicator());
+              return Container(
+                child: Text(
+                  'Loading Data...',
+                  style: secondaryTextStyle,
+                ),
+              );
             }
           },
         ),
@@ -182,7 +198,7 @@ class _HomePageState extends State<HomePage> {
 
     return Container(
       child: SafeArea(
-        child: Column(
+        child: ListView(
           children: [
             Container(
               margin: const EdgeInsets.only(top: 18, left: 18),
@@ -229,6 +245,40 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            CarouselSlider(
+              options: CarouselOptions(
+                height: 120,
+                autoPlay: true,
+                enlargeCenterPage: true,
+                enableInfiniteScroll: true,
+              ),
+              items: imageList
+                  .map((e) => Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0.5,
+                            color: secondaryTextColor,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: <Widget>[
+                              Image.network(
+                                e,
+                                fit: BoxFit.cover,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ))
+                  .toList(),
             ),
             Container(
               margin: const EdgeInsets.only(top: 26, left: 18, right: 18),
