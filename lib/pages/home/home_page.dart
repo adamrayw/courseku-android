@@ -265,8 +265,8 @@ class _HomePageState extends State<HomePage> {
               items: artikelProvider.artikel
                   .map((e) => Container(
                         padding: const EdgeInsets.only(
-                          top: 10,
-                          left: 10,
+                          top: 14,
+                          left: 14,
                           right: 10,
                         ),
                         decoration: BoxDecoration(
@@ -291,9 +291,17 @@ class _HomePageState extends State<HomePage> {
                                   Text(
                                     e.name,
                                     style: GoogleFonts.poppins(
-                                      fontSize: 16,
+                                      fontSize: 20,
                                       color: Colors.white,
+                                      fontWeight: semiBold,
                                     ),
+                                  ),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    e.author,
+                                    style: secondaryTextStyle,
                                   ),
                                 ],
                               ),
@@ -309,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'What do you want to learn?',
+                    'Apa yang ingin kamu pelajari?',
                     style: headerTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: bold,
@@ -323,7 +331,7 @@ class _HomePageState extends State<HomePage> {
                     height: 26,
                   ),
                   Text(
-                    'Find courses by field',
+                    'Cari sesuai bidang kamu',
                     style: headerTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: bold,
