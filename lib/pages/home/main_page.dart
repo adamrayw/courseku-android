@@ -22,6 +22,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     Widget customButtonNav() {
       return BottomNavigationBar(
+        selectedItemColor: primaryTextColor,
+        unselectedItemColor: secondaryTextColor,
         currentIndex: currentIndex,
         onTap: (value) {
           setState(() {
@@ -88,7 +90,6 @@ class _MainPageState extends State<MainPage> {
       message: "Press back again to close",
       child: Scaffold(
         bottomNavigationBar: customButtonNav(),
-        
         body: body(),
       ),
     );
