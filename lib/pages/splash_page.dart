@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:courseku_mobile/providers/carousel_artikel_provider.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -14,13 +16,15 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    setState(() {
-      Timer(
-        const Duration(seconds: 3),
-        () => Navigator.pushNamed(context, '/sign-in'),
-      );
-    });
+    getInit();
+
     super.initState();
+  }
+
+  getInit() async {
+    await Provider.of<CarouselArtikelProvider>(context, listen: false)
+        .getArtikel();
+    Navigator.pushNamed(context, '/sign-in');
   }
 
   @override
