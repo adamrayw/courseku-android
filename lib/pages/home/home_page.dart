@@ -264,10 +264,19 @@ class _HomePageState extends State<HomePage> {
               ),
               items: artikelProvider.artikel
                   .map((e) => Container(
+                        padding: const EdgeInsets.only(
+                          top: 10,
+                          left: 10,
+                          right: 10,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 0.5,
                             color: secondaryTextColor,
+                          ),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/background_carousel.png'),
+                            fit: BoxFit.cover,
                           ),
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -276,8 +285,17 @@ class _HomePageState extends State<HomePage> {
                           child: Stack(
                             fit: StackFit.expand,
                             children: <Widget>[
-                              Text(
-                                e.name,
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    e.name,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
