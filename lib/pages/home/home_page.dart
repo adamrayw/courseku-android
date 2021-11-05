@@ -1,8 +1,10 @@
 // ignore_for_file: avoid_unnecessary_containers, unused_element, unused_import, unused_local_variable
 
 import 'dart:convert';
+import 'package:courseku_mobile/models/carousel_artikel_model.dart';
 import 'package:courseku_mobile/models/user_model.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
+import 'package:courseku_mobile/providers/carousel_artikel_provider.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:courseku_mobile/widgets/programming_card.dart';
 import 'package:courseku_mobile/widgets/courses_by_field.dart';
@@ -27,6 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   final String apiUrl = "http://courseku.herokuapp.com/api/home";
   final String apiUrl2 = "http://courseku.herokuapp.com/api/field";
+  final String apiUrl3 = "http://courseku.herokuapp.com/api/carousel-artikel";
 
   Future<List<dynamic>> fetchProg() async {
     final result = await http.get(Uri.parse(apiUrl));
@@ -55,14 +58,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   final List<String> imageList = [
-    "https://source.unsplash.com/700x200?coding",
-    "https://source.unsplash.com/700x200?programming",
+    "Text 1",
+    "Text 2",
+    "Text 3",
   ];
 
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of(context);
     UserModel user = authProvider.user;
+    CarouselArtikelProvider artikelProvider =
+        Provider.of<CarouselArtikelProvider>(context);
 
     Widget programmingCarousel() {
       return Container(
@@ -165,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                             _imgField(snapshot.data[index]),
                             width: 28,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 4,
                           ),
                           Text(
@@ -256,7 +262,7 @@ class _HomePageState extends State<HomePage> {
                 enlargeCenterPage: true,
                 enableInfiniteScroll: true,
               ),
-              items: imageList
+              items: artikelProvider.artikel
                   .map((e) => Container(
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -270,9 +276,8 @@ class _HomePageState extends State<HomePage> {
                           child: Stack(
                             fit: StackFit.expand,
                             children: <Widget>[
-                              Image.network(
-                                e,
-                                fit: BoxFit.cover,
+                              Text(
+                                e.name,
                               ),
                             ],
                           ),
