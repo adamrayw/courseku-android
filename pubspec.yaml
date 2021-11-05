@@ -31,6 +31,8 @@ dependencies:
   http: ^0.13.4
   provider: ^6.0.1
   google_fonts: ^2.1.0
+  double_back_to_close: ^2.0.0
+  carousel_slider: ^4.0.0
   flutter:
     sdk: flutter
 
@@ -68,6 +70,7 @@ flutter:
     - assets/submit_icon.png
     - assets/profile_icon.png
     - assets/setting_icon.png
+    - assets/background_carousel.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
