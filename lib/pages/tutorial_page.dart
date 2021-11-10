@@ -1,25 +1,96 @@
 // ignore_for_file: avoid_unnecessary_containers, unused_import
-
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:courseku_mobile/widgets/list_tutorials.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TutorialPage extends StatelessWidget {
-  const TutorialPage({Key? key}) : super(key: key);
+  final String slug;
+  final String name;
+  final String apiUrl = "http://courseku.herokuapp.com/api/learn/";
+  const TutorialPage({Key? key, required this.slug, required this.name})
+      : super(key: key);
+
+  Future<List<dynamic>> fetchCourse() async {
+    final result = await http
+        .get(Uri.parse("http://courseku.herokuapp.com/api/learn/" + slug));
+    return json.decode(result.body)['tutorial'];
+  }
+
+  String _nameCourse(dynamic dataNameCourse) {
+    return dataNameCourse['name'];
+  }
+
+  String _nameAuthor(dynamic dataNameAuthor) {
+    return dataNameAuthor['author'];
+  }
 
   @override
   Widget build(BuildContext context) {
     Widget listTutorial() {
       return Container(
         child: Expanded(
-          child: ListView(
-            children: const [
-              ListTutorial(),
-              ListTutorial(),
-              ListTutorial(),
-              ListTutorial(),
-            ],
+          child: Container(
+            height: 400,
+            // color: Colors.amber,
+            child: FutureBuilder<List<dynamic>>(
+              future: fetchCourse(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    // padding: const EdgeInsets.all(8),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        borderRadius: BorderRadius.circular(6.0),
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 22,
+                            vertical: 20,
+                          ),
+                          margin: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            // color: Colors.red,
+                            border: Border.all(
+                              width: 0.5,
+                              color: secondaryTextColor,
+                            ),
+                            borderRadius: BorderRadius.circular(6.0),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                _nameCourse(
+                                  snapshot.data[index],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                _nameAuthor(snapshot.data[index]),
+                                style: secondaryTextStyle,
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return Container(
+                    child: Text(
+                      'Loading...',
+                      style: secondaryTextStyle,
+                    ),
+                  );
+                }
+              },
+            ),
           ),
         ),
       );
@@ -82,14 +153,14 @@ class TutorialPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'Learn Python',
+                        'Learn $name',
                         style: headerTextStyle.copyWith(
                           fontSize: 34,
                           fontWeight: bold,
                         ),
                       ),
                       Text(
-                        "Let's learn python, this course is sent from the programming community",
+                        "Mari belajar $name, kursus ini di kirim oleh berbagai user",
                         style: secondaryTextStyle.copyWith(
                           fontSize: 14,
                         ),
