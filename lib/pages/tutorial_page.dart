@@ -72,7 +72,9 @@ class TutorialPage extends StatelessWidget {
                                 height: 10,
                               ),
                               Text(
-                                _nameAuthor(snapshot.data[index]),
+                                _nameAuthor(
+                                  snapshot.data[index],
+                                ),
                                 style: secondaryTextStyle,
                               ),
                             ],
