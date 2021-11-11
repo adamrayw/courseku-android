@@ -33,8 +33,17 @@ class TutorialPage extends StatelessWidget {
       return Container(
         child: Expanded(
           child: Container(
-            height: 400,
-            // color: Colors.amber,
+            // height: 400,
+            margin: const EdgeInsets.only(
+              top: 14,
+            ),
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              color: Colors.white,
+            ),
             child: FutureBuilder<List<dynamic>>(
               future: fetchCourse(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -47,11 +56,13 @@ class TutorialPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6.0),
                         onTap: () {},
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 22,
-                            vertical: 20,
+                          padding: const EdgeInsets.all(
+                            20,
                           ),
-                          margin: EdgeInsets.all(8.0),
+                          margin: const EdgeInsets.symmetric(
+                            vertical: 8.0,
+                            horizontal: 18.0,
+                          ),
                           decoration: BoxDecoration(
                             // color: Colors.red,
                             border: Border.all(
@@ -67,16 +78,21 @@ class TutorialPage extends StatelessWidget {
                                 _nameCourse(
                                   snapshot.data[index],
                                 ),
+                                style: headerTextStyle.copyWith(
+                                  fontWeight: semiBold,
+                                  fontSize: 16,
+                                ),
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 6,
                               ),
                               Text(
-                                _nameAuthor(
-                                  snapshot.data[index],
-                                ),
-                                style: secondaryTextStyle,
-                              ),
+                                  _nameAuthor(
+                                    snapshot.data[index],
+                                  ),
+                                  style: secondaryTextStyle.copyWith(
+                                    fontSize: 12,
+                                  )),
                             ],
                           ),
                         ),
@@ -85,6 +101,8 @@ class TutorialPage extends StatelessWidget {
                   );
                 } else {
                   return Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(left: 18, top: 4),
                     child: Text(
                       'Loading...',
                       style: secondaryTextStyle,
@@ -99,74 +117,61 @@ class TutorialPage extends StatelessWidget {
     }
 
     return Scaffold(
+      backgroundColor: primaryTextColor,
+      appBar: AppBar(
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
+            );
+          },
+        ),
+        backgroundColor: primaryTextColor,
+        elevation: 0,
+      ),
       body: Container(
         child: SafeArea(
           child: Column(
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 18, left: 18),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(
-                                  'https://i.imgur.com/BoN9kdC.png'),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 14,
-                        ),
-                        Text(
-                          'Hi, Adam',
-                          style: primaryTextStyle.copyWith(
-                            fontSize: 18,
-                            fontWeight: medium,
-                          ),
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      onPressed: () {},
-                      icon: Image.asset(
-                        'assets/setting_icon.png',
-                        width: 20,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const SizedBox(
-                height: 26,
+                height: 8,
               ),
               Expanded(
                 child: Container(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 18,
-                  ),
+                  width: double.infinity,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Learn $name',
-                        style: headerTextStyle.copyWith(
-                          fontSize: 34,
-                          fontWeight: bold,
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 18,
                         ),
-                      ),
-                      Text(
-                        "Mari belajar $name, kursus ini di kirim oleh berbagai user",
-                        style: secondaryTextStyle.copyWith(
-                          fontSize: 14,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Learn $name',
+                              style: headerTextStyle.copyWith(
+                                fontSize: 28,
+                                fontWeight: bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              "Mari belajar $name, kursus ini di kirim oleh berbagai user",
+                              style: secondaryTextStyle.copyWith(
+                                fontSize: 14,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(
                         height: 18,
