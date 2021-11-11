@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:courseku_mobile/models/carousel_artikel_model.dart';
 import 'package:courseku_mobile/models/user_model.dart';
+import 'package:courseku_mobile/pages/tutorial_page.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:courseku_mobile/providers/carousel_artikel_provider.dart';
 import 'package:courseku_mobile/theme.dart';
@@ -57,11 +58,9 @@ class _HomePageState extends State<HomePage> {
     return dataFImg['img_url'];
   }
 
-  final List<String> imageList = [
-    "Text 1",
-    "Text 2",
-    "Text 3",
-  ];
+  String _slugProg(dynamic dataSlugProg) {
+    return dataSlugProg['slug'];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +89,17 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     borderRadius: BorderRadius.circular(6.0),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TutorialPage(
+                            slug: _slugProg(snapshot.data[index]),
+                            name: _name(snapshot.data[index]),
+                          ),
+                        ),
+                      );
+                    },
                     child: Container(
                       width: 64,
                       // height: 56.89,
