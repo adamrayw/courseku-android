@@ -64,120 +64,131 @@ class TutorialPage extends StatelessWidget {
                     // padding: const EdgeInsets.all(8),
                     itemCount: snapshot.data.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        borderRadius: BorderRadius.circular(6.0),
-                        onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.all(
-                            20,
+                      return Column(
+                        children: [
+                          const SizedBox(
+                            height: 6,
                           ),
-                          margin: const EdgeInsets.symmetric(
-                            vertical: 8.0,
-                            horizontal: 18.0,
-                          ),
-                          decoration: BoxDecoration(
-                            // color: Colors.red,
-                            border: Border.all(
-                              width: 0.5,
-                              color: secondaryTextColor,
-                            ),
+                          InkWell(
                             borderRadius: BorderRadius.circular(6.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                _nameCourse(
-                                  snapshot.data[index],
-                                ),
-                                style: headerTextStyle.copyWith(
-                                  fontWeight: semiBold,
-                                  fontSize: 16,
-                                ),
+                            onTap: () {
+                              Navigator.pushNamed(context, '/detail-course');
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(
+                                20,
                               ),
-                              const SizedBox(
-                                height: 6,
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                                horizontal: 18.0,
                               ),
-                              Row(
+                              decoration: BoxDecoration(
+                                // color: Colors.red,
+                                border: Border.all(
+                                  width: 0.5,
+                                  color: secondaryTextColor,
+                                ),
+                                borderRadius: BorderRadius.circular(6.0),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _nameAuthor(
+                                    _nameCourse(
                                       snapshot.data[index],
                                     ),
-                                    style: secondaryTextStyle.copyWith(
-                                      fontSize: 12,
+                                    style: headerTextStyle.copyWith(
+                                      fontWeight: semiBold,
+                                      fontSize: 16,
                                     ),
                                   ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
                                   Row(
                                     children: [
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 6,
-                                          vertical: 2,
+                                      Text(
+                                        _nameAuthor(
+                                          snapshot.data[index],
                                         ),
-                                        decoration: BoxDecoration(
-                                          color: primaryTextColor,
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        child: Text(
-                                          _nameType(
-                                            snapshot.data[index],
-                                          ),
-                                          style: secondaryTextStyle.copyWith(
-                                            fontSize: 10,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 6,
-                                      ),
-                                      Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 6,
-                                          vertical: 2,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          color: primaryTextColor,
-                                          borderRadius:
-                                              BorderRadius.circular(6),
-                                        ),
-                                        child: Text(
-                                          _nameLevel(
-                                            snapshot.data[index],
-                                          ),
-                                          style: secondaryTextStyle.copyWith(
-                                            fontSize: 10,
-                                            color: Colors.white,
-                                          ),
+                                        style: secondaryTextStyle.copyWith(
+                                          fontSize: 12,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  Text(
-                                    "Disubmit Oleh " +
-                                        _nameSubmitted(
-                                          snapshot.data[index],
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                              vertical: 2,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: primaryTextColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            child: Text(
+                                              _nameType(
+                                                snapshot.data[index],
+                                              ),
+                                              style:
+                                                  secondaryTextStyle.copyWith(
+                                                fontSize: 10,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 6,
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 6,
+                                              vertical: 2,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: primaryTextColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(6),
+                                            ),
+                                            child: Text(
+                                              _nameLevel(
+                                                snapshot.data[index],
+                                              ),
+                                              style:
+                                                  secondaryTextStyle.copyWith(
+                                                fontSize: 10,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        "Disubmit Oleh " +
+                                            _nameSubmitted(
+                                              snapshot.data[index],
+                                            ),
+                                        style: secondaryTextStyle.copyWith(
+                                          fontSize: 12,
                                         ),
-                                    style: secondaryTextStyle.copyWith(
-                                      fontSize: 12,
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       );
                     },
                   );
