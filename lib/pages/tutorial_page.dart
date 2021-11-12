@@ -5,6 +5,7 @@ import 'package:courseku_mobile/widgets/list_tutorials.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'detail_course.dart';
 
 class TutorialPage extends StatelessWidget {
   final String slug;
@@ -37,6 +38,10 @@ class TutorialPage extends StatelessWidget {
 
   String _nameLevel(dynamic dataNameLevel) {
     return dataNameLevel['level'];
+  }
+
+  String _nameSlug(dynamic dataNameSlug) {
+    return dataNameSlug['slug'];
   }
 
   @override
@@ -72,7 +77,14 @@ class TutorialPage extends StatelessWidget {
                           InkWell(
                             borderRadius: BorderRadius.circular(6.0),
                             onTap: () {
-                              Navigator.pushNamed(context, '/detail-course');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailCourse(
+                                    slug: _nameSlug(snapshot.data[index]),
+                                  ),
+                                ),
+                              );
                             },
                             child: Container(
                               padding: const EdgeInsets.all(
