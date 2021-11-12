@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return TextFormField(
         controller: nameController,
         decoration: InputDecoration(
-          hintText: 'Full Name',
+          hintText: 'Nama Lengkap',
           border: OutlineInputBorder(
             borderSide: BorderSide(
               color: secondaryTextColor,
@@ -119,7 +119,7 @@ class _SignUpPageState extends State<SignUpPage> {
         controller: passwordConfirmationController,
         obscureText: true,
         decoration: InputDecoration(
-          hintText: 'Confirm Password',
+          hintText: 'Konfirmasi Password',
           border: OutlineInputBorder(
             borderSide: BorderSide(
               color: secondaryTextColor,
@@ -145,7 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           child: isLoading
               ? Text(
-                  'Logging in...',
+                  'Mohon Tunggu...',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 16,
@@ -153,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 )
               : Text(
-                  'Sign Up',
+                  'Register',
                   style: GoogleFonts.poppins(
                     color: Colors.white,
                     fontSize: 16,
@@ -175,7 +175,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   top: 46,
                 ),
                 child: Text(
-                  'Welcome to \nCOURSEKU',
+                  'Register',
                   style: primaryTextStyle.copyWith(
                     fontSize: 38,
                     fontWeight: bold,
@@ -186,7 +186,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 6,
               ),
               Text(
-                'Sign up to submit, like, comment and more!',
+                'Register untuk like, comment, dan masih banyak lagi!',
                 style: secondaryTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: medium,
@@ -220,7 +220,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Already have an account?',
+                    'Sudah punya akun?',
                     style: secondaryTextStyle.copyWith(
                       fontSize: 16,
                     ),
@@ -230,7 +230,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       Navigator.pushNamed(context, '/sign-in');
                     },
                     child: Text(
-                      ' Sign In',
+                      ' Login',
                       style: primaryTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
