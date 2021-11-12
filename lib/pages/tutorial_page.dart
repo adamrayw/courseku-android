@@ -27,6 +27,18 @@ class TutorialPage extends StatelessWidget {
     return dataNameAuthor['author'];
   }
 
+  String _nameSubmitted(dynamic dataNameSubmitted) {
+    return dataNameSubmitted['submitted_by'];
+  }
+
+  String _nameType(dynamic dataNameType) {
+    return dataNameType['type'];
+  }
+
+  String _nameLevel(dynamic dataNameLevel) {
+    return dataNameLevel['level'];
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget listTutorial() {
@@ -86,13 +98,83 @@ class TutorialPage extends StatelessWidget {
                               const SizedBox(
                                 height: 6,
                               ),
-                              Text(
-                                  _nameAuthor(
-                                    snapshot.data[index],
+                              Row(
+                                children: [
+                                  Text(
+                                    _nameAuthor(
+                                      snapshot.data[index],
+                                    ),
+                                    style: secondaryTextStyle.copyWith(
+                                      fontSize: 12,
+                                    ),
                                   ),
-                                  style: secondaryTextStyle.copyWith(
-                                    fontSize: 12,
-                                  )),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 6,
+                                          vertical: 2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: primaryTextColor,
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                        ),
+                                        child: Text(
+                                          _nameType(
+                                            snapshot.data[index],
+                                          ),
+                                          style: secondaryTextStyle.copyWith(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 6,
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 6,
+                                          vertical: 2,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: primaryTextColor,
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                        ),
+                                        child: Text(
+                                          _nameLevel(
+                                            snapshot.data[index],
+                                          ),
+                                          style: secondaryTextStyle.copyWith(
+                                            fontSize: 10,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    "Disubmit Oleh " +
+                                        _nameSubmitted(
+                                          snapshot.data[index],
+                                        ),
+                                    style: secondaryTextStyle.copyWith(
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
