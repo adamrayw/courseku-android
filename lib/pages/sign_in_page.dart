@@ -102,7 +102,7 @@ class _SignInPageState extends State<SignInPage> {
                   top: 46,
                 ),
                 child: Text(
-                  'Welcome \nBack!',
+                  'Login',
                   style: primaryTextStyle.copyWith(
                     fontSize: 38,
                     fontWeight: bold,
@@ -113,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
                 height: 6,
               ),
               Text(
-                'Want to learn something new?',
+                'Ingin belajar hal baru?',
                 style: secondaryTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: medium,
@@ -152,7 +152,7 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         )
                       : Text(
-                          'Sign In',
+                          'Login',
                           style: GoogleFonts.poppins(
                             color: Colors.white,
                             fontSize: 16,
@@ -168,7 +168,7 @@ class _SignInPageState extends State<SignInPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Dont have an account?',
+                    'Belum memiliki akun?',
                     style: secondaryTextStyle.copyWith(
                       fontSize: 16,
                     ),
@@ -178,7 +178,7 @@ class _SignInPageState extends State<SignInPage> {
                       Navigator.pushNamed(context, '/sign-up');
                     },
                     child: Text(
-                      ' Sign Up',
+                      ' Register',
                       style: primaryTextStyle.copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
