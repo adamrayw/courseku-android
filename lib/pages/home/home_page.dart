@@ -15,6 +15,8 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../detail_course.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -272,49 +274,60 @@ class _HomePageState extends State<HomePage> {
                 enableInfiniteScroll: true,
               ),
               items: artikelProvider.artikel
-                  .map((e) => Container(
-                        padding: const EdgeInsets.only(
-                          top: 14,
-                          left: 14,
-                          right: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 0.5,
-                            color: secondaryTextColor,
+                  .map((e) => GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailCourse(slug: e.slug),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                            top: 14,
+                            left: 14,
+                            right: 10,
                           ),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/background_carousel.png'),
-                            fit: BoxFit.cover,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 0.5,
+                              color: secondaryTextColor,
+                            ),
+                            image: const DecorationImage(
+                              image:
+                                  AssetImage('assets/background_carousel.png'),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    e.name,
-                                    style: GoogleFonts.poppins(
-                                      fontSize: 20,
-                                      color: Colors.white,
-                                      fontWeight: semiBold,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Stack(
+                              fit: StackFit.expand,
+                              children: <Widget>[
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      e.name,
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: semiBold,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 6,
-                                  ),
-                                  Text(
-                                    e.author,
-                                    style: secondaryTextStyle,
-                                  ),
-                                ],
-                              ),
-                            ],
+                                    const SizedBox(
+                                      height: 6,
+                                    ),
+                                    Text(
+                                      e.author,
+                                      style: secondaryTextStyle,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ))
