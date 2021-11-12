@@ -1,6 +1,6 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
-import 'package:courseku_mobile/pages/detail_tutorial.dart';
+import 'package:courseku_mobile/pages/detail_course.dart';
 import 'package:courseku_mobile/pages/home/main_page.dart';
 import 'package:courseku_mobile/pages/splash_page.dart';
 import 'package:courseku_mobile/pages/tutorial_page.dart';
@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           '/sign-up': (context) => const SignUpPage(),
           '/sign-in': (context) => const SignInPage(),
           '/main': (context) => const MainPage(),
-          '/detail-tutorial': (context) => const DetailTutorial(),
+          '/detail-course': (context) => const DetailCourse()
         },
       ),
     );
