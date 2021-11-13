@@ -1,9 +1,6 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
-
-import 'package:courseku_mobile/pages/detail_course.dart';
 import 'package:courseku_mobile/pages/home/main_page.dart';
 import 'package:courseku_mobile/pages/splash_page.dart';
-import 'package:courseku_mobile/pages/tutorial_page.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:courseku_mobile/providers/carousel_artikel_provider.dart';
 import 'package:flutter/material.dart';
