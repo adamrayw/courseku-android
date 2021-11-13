@@ -248,7 +248,7 @@ class TutorialPage extends StatelessWidget {
                 height: 8,
               ),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
