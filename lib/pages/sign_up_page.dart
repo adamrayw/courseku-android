@@ -132,7 +132,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     Widget signUpButton() {
-      return Container(
+      return SizedBox(
         height: 48,
         width: double.infinity,
         child: TextButton(
