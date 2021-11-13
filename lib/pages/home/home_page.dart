@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
         Provider.of<CarouselArtikelProvider>(context);
 
     Widget programmingCarousel() {
-      return Container(
+      return SizedBox(
         height: 154,
         // color: Colors.amber,
         child: FutureBuilder<List<dynamic>>(
@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget coursesByField() {
-      return Container(
+      return SizedBox(
         height: 154,
         // color: Colors.amber,
         child: FutureBuilder<List<dynamic>>(
