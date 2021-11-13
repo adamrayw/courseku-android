@@ -152,7 +152,7 @@ class DetailCourse extends StatelessWidget {
                         left: 18,
                         right: 18,
                       ),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white,
                       ),
                       child: Column(
@@ -192,11 +192,9 @@ class DetailCourse extends StatelessWidget {
                 ],
               );
             } else {
-              return Container(
-                child: Text(
-                  'Loading...',
-                  style: secondaryTextStyle,
-                ),
+              return Text(
+                'Loading...',
+                style: secondaryTextStyle,
               );
             }
           },
