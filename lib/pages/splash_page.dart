@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:courseku_mobile/providers/carousel_artikel_provider.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:flutter/material.dart';
