@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:courseku_mobile/models/carousel_artikel_model.dart';
 import 'package:courseku_mobile/models/user_model.dart';
+import 'package:courseku_mobile/pages/find_by_field.dart';
 import 'package:courseku_mobile/pages/tutorial_page.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:courseku_mobile/providers/carousel_artikel_provider.dart';
@@ -62,6 +63,14 @@ class _HomePageState extends State<HomePage> {
 
   String _slugProg(dynamic dataSlugProg) {
     return dataSlugProg['slug'];
+  }
+
+  String _slugField(dynamic dataSlugField) {
+    return dataSlugField['slug'];
+  }
+
+  String _slugName(dynamic dataSlugName) {
+    return dataSlugName['name'];
   }
 
   @override
@@ -139,9 +148,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget coursesByField() {
-      return SizedBox(
-        height: 154,
-        // color: Colors.amber,
+      return Container(
+        height: 120,
         child: FutureBuilder<List<dynamic>>(
           future: fetchField(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -159,7 +167,17 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     borderRadius: BorderRadius.circular(6.0),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FindByField(
+                            slug: _slugField(snapshot.data[index]),
+                            name: _slugName(snapshot.data[index]),
+                          ),
+                        ),
+                      );
+                    },
                     child: Container(
                       width: 64,
                       height: 20,
@@ -235,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                           child: Text(
                             user.name[0],
                             style: GoogleFonts.poppins(
-                              fontSize: 16,
+                              fontSize: 20,
                               color: Colors.white,
                             ),
                           ),
@@ -245,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                         width: 14,
                       ),
                       Text(
-                        'Hi, ${user.name}',
+                        'Hello, ${user.name}',
                         style: primaryTextStyle.copyWith(
                           fontSize: 18,
                           fontWeight: medium,
@@ -264,7 +282,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 24,
             ),
             CarouselSlider(
               options: CarouselOptions(
@@ -274,63 +292,64 @@ class _HomePageState extends State<HomePage> {
                 enableInfiniteScroll: true,
               ),
               items: artikelProvider.artikel
-                  .map((e) => GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DetailCourse(slug: e.slug),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                            top: 14,
-                            left: 14,
-                            right: 10,
+                  .map(
+                    (e) => GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailCourse(slug: e.slug),
                           ),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 0.5,
-                              color: secondaryTextColor,
-                            ),
-                            image: const DecorationImage(
-                              image:
-                                  AssetImage('assets/background_carousel.png'),
-                              fit: BoxFit.cover,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
+                        );
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.only(
+                          top: 14,
+                          left: 14,
+                          right: 10,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 0.5,
+                            color: secondaryTextColor,
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Stack(
-                              fit: StackFit.expand,
-                              children: <Widget>[
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      e.name,
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: semiBold,
-                                      ),
+                          image: const DecorationImage(
+                            image: AssetImage('assets/background_carousel.png'),
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    e.name,
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: semiBold,
                                     ),
-                                    const SizedBox(
-                                      height: 6,
-                                    ),
-                                    Text(
-                                      e.author,
-                                      style: secondaryTextStyle,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    e.author,
+                                    style: secondaryTextStyle,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ))
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
             Container(
@@ -362,7 +381,18 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(
                     height: 16,
                   ),
-                  coursesByField()
+                  coursesByField(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Developed by Adam',
+                        style: secondaryTextStyle.copyWith(
+                          fontSize: 8,
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
             )
