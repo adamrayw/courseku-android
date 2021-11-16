@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:courseku_mobile/models/comment_model.dart';
 import 'package:courseku_mobile/pages/webview_course.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
