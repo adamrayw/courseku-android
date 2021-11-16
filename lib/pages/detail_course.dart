@@ -2,17 +2,24 @@
 
 import 'dart:convert';
 
+import 'package:courseku_mobile/models/comment_model.dart';
+import 'package:courseku_mobile/pages/webview_course.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:http/http.dart' as http;
 
-class DetailCourse extends StatelessWidget {
+class DetailCourse extends StatefulWidget {
   final String slug;
-  DetailCourse({Key? key, required this.slug}) : super(key: key);
+  const DetailCourse({Key? key, required this.slug}) : super(key: key);
 
+  @override
+  State<DetailCourse> createState() => _DetailCourseState();
+}
+
+class _DetailCourseState extends State<DetailCourse> {
   Future<dynamic> fetchDetailCourse() async {
     final result = await http.get(
-      Uri.parse('http://courseku.herokuapp.com/api/course/' + slug),
+      Uri.parse('http://courseku.herokuapp.com/api/course/' + widget.slug),
     );
     return json.decode(result.body)['datas'];
   }
@@ -42,9 +49,9 @@ class DetailCourse extends StatelessWidget {
     return comment.length.toString();
   }
 
-  // String _comments(dynamic dataComment) {
-  //   return dataComment['comments'][1]['comment'].toString();
-  // }
+  String _sourceLink(dynamic datasourceLink) {
+    return datasourceLink['source_link'];
+  }
 
   String _nameDescription(dynamic dataNameDescription) {
     if (dataNameDescription['description'] != null) {
@@ -56,6 +63,8 @@ class DetailCourse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // CommentProvider commentProvider = Provider.of<CommentProvider>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryTextColor,
@@ -209,7 +218,16 @@ class DetailCourse extends StatelessWidget {
                             height: 24,
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WebviewCourse(
+                                    link: _sourceLink(snapshot.data[0]),
+                                  ),
+                                ),
+                              );
+                            },
                             child: Container(
                               padding: const EdgeInsets.symmetric(vertical: 8),
                               width: double.infinity,
