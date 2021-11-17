@@ -11,8 +11,13 @@ class ProfilePage extends StatelessWidget {
         backgroundColor: primaryTextColor,
         title: Text(
           'Profile',
-          style: headerTextStyle.copyWith(color: Colors.white),
+          style: headerTextStyle.copyWith(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: bold,
+          ),
         ),
+        elevation: 0,
       ),
       body: Container(
         width: double.infinity,
