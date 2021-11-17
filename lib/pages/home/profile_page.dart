@@ -111,31 +111,36 @@ class ProfilePage extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: secondaryTextColor,
-                        width: 0.5,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Edit Profile",
-                        style: secondaryTextStyle.copyWith(
-                          fontSize: 16,
-                          fontWeight: bold,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/edit-profile');
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: secondaryTextColor,
+                          width: 0.5,
                         ),
                       ),
-                      Icon(
-                        Icons.edit,
-                        color: primaryTextColor,
-                      ),
-                    ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Edit Profile",
+                          style: secondaryTextStyle.copyWith(
+                            fontSize: 16,
+                            fontWeight: bold,
+                          ),
+                        ),
+                        Icon(
+                          Icons.edit,
+                          color: primaryTextColor,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(
