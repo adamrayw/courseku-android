@@ -1,11 +1,16 @@
+import 'package:courseku_mobile/models/user_model.dart';
+import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of(context);
+    UserModel user = authProvider.user;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryTextColor,
@@ -44,7 +49,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        "A",
+                        user.name[0],
                         style: primaryTextStyle.copyWith(
                           fontSize: 48,
                           color: secondaryTextColor,
@@ -56,7 +61,7 @@ class ProfilePage extends StatelessWidget {
                     height: 16,
                   ),
                   Text(
-                    'Adam Ray',
+                    user.name,
                     style: headerTextStyle.copyWith(
                       fontSize: 32,
                       fontWeight: bold,
