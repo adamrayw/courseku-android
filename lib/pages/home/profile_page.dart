@@ -9,21 +9,14 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryTextColor,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.close,
-            color: Colors.white,
-          ),
-        ),
         title: Text(
           'Profile',
           style: headerTextStyle.copyWith(color: Colors.white),
         ),
       ),
       body: Container(
+        width: double.infinity,
+        height: 180,
         decoration: BoxDecoration(
           color: primaryTextColor,
         ),
