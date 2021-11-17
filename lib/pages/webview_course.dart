@@ -11,9 +11,14 @@ class WebviewCourse extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: Icon(
-          Icons.close,
-          color: primaryTextColor,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.close,
+            color: primaryTextColor,
+          ),
         ),
         title: Text(
           link,
