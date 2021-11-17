@@ -69,7 +69,7 @@ class _SignInPageState extends State<SignInPage> {
           const SnackBar(
             backgroundColor: Color(0xff15D2A7),
             content: Text(
-              'Welcome Back!',
+              'Selamat Datang Kembali!',
               textAlign: TextAlign.center,
             ),
           ),
@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
           const SnackBar(
             backgroundColor: Color(0xffff0f0f),
             content: Text(
-              'Login Failed!',
+              'Email atau Password Salah!',
               textAlign: TextAlign.center,
             ),
           ),
