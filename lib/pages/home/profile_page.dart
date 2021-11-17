@@ -63,6 +63,38 @@ class ProfilePage extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // Column(
+                  //   // crossAxisAlignment: CrossAxisAlignment.baseline,
+                  //   children: [
+                  //     Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: [
+                  //         Icon(
+                  //           Icons.star,
+                  //           color: Colors.blue.shade900,
+                  //         ),
+                  //         const SizedBox(
+                  //           width: 6,
+                  //         ),
+                  //         Text(
+                  //           'Reputation',
+                  //           style: headerTextStyle.copyWith(
+                  //             color: Colors.white,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     Text(
+                  //       '120',
+                  //       style: secondaryTextStyle.copyWith(
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
@@ -97,6 +129,36 @@ class ProfilePage extends StatelessWidget {
                       Icon(
                         Icons.edit,
                         color: primaryTextColor,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 18,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: secondaryTextColor,
+                        width: 0.5,
+                      ),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Log out",
+                        style: secondaryTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: bold,
+                        ),
+                      ),
+                      Icon(
+                        Icons.logout_outlined,
+                        color: Colors.red.shade300,
                       ),
                     ],
                   ),
