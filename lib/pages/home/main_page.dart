@@ -80,7 +80,7 @@ class _MainPageState extends State<MainPage> {
           return const SubmitPage();
           break;
         case 3:
-          return const ProfilePage();
+          return ProfilePage();
           break;
         default:
       }
