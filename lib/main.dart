@@ -1,4 +1,5 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
+import 'package:courseku_mobile/pages/edit_profile.dart';
 import 'package:courseku_mobile/pages/home/main_page.dart';
 import 'package:courseku_mobile/pages/splash_page.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
