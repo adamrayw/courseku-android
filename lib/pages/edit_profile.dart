@@ -23,8 +23,6 @@ class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
 
-  bool isLoading = false;
-
   Future handelEdit() async {
     final response = await http.put(
         Uri.parse('http://courseku.herokuapp.com/api/update-profile/' +
@@ -125,23 +123,14 @@ class _EditProfileState extends State<EditProfile> {
                       borderRadius: BorderRadius.circular(6.0),
                     ),
                   ),
-                  child: isLoading
-                      ? Text(
-                          'Logging in...',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        )
-                      : Text(
-                          'Update',
-                          style: GoogleFonts.poppins(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                  child: Text(
+                    'Update',
+                    style: GoogleFonts.poppins(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ],
