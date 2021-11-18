@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:provider/provider.dart';
 
+import '../edit_profile.dart';
+
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({Key? key}) : super(key: key);
+  var id;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class ProfilePage extends StatelessWidget {
         ),
         elevation: 0,
       ),
-      body: Column(
+      body: ListView(
         children: [
           Container(
             width: double.infinity,
@@ -113,7 +116,12 @@ class ProfilePage extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/edit-profile');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfile(id: user.id),
+                      ),
+                    );
                   },
                   child: Container(
                     padding: const EdgeInsets.only(bottom: 10),
