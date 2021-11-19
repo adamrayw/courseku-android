@@ -17,7 +17,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryTextColor,
-        // centerTitle: true,
+        centerTitle: true,
         title: Text(
           'Profile',
           style: headerTextStyle.copyWith(
@@ -74,35 +74,44 @@ class ProfilePage extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  // Column(
-                  //   // crossAxisAlignment: CrossAxisAlignment.baseline,
-                  //   children: [
-                  //     Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         Icon(
-                  //           Icons.star,
-                  //           color: Colors.blue.shade900,
-                  //         ),
-                  //         const SizedBox(
-                  //           width: 6,
-                  //         ),
-                  //         Text(
-                  //           'Reputation',
-                  //           style: headerTextStyle.copyWith(
-                  //             color: Colors.white,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     Text(
-                  //       '120',
-                  //       style: secondaryTextStyle.copyWith(
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  Container(
+                    width: 120,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.star,
+                              color: Colors.blue.shade900,
+                            ),
+                            const SizedBox(
+                              width: 6,
+                            ),
+                            Text(
+                              'Reputation',
+                              style: headerTextStyle.copyWith(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: medium,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 6,
+                        ),
+                        Text(
+                          '120 Points',
+                          style: secondaryTextStyle.copyWith(
+                            color: Colors.grey,
+                            fontWeight: light,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -113,70 +122,99 @@ class ProfilePage extends StatelessWidget {
               vertical: 35,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditProfile(id: user.id),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: secondaryTextColor,
-                          width: 0.5,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Edit Profile",
-                          style: secondaryTextStyle.copyWith(
-                            fontSize: 16,
-                            fontWeight: bold,
+                Text(
+                  "General",
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade200,
+                        blurRadius: 4.0,
+                        spreadRadius: 1.0,
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditProfile(id: user.id),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey.shade200,
+                                width: 0.5,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Profile Settings",
+                                style: secondaryTextStyle.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: bold,
+                                ),
+                              ),
+                              Icon(
+                                Icons.edit,
+                                color: primaryTextColor,
+                              ),
+                            ],
                           ),
                         ),
-                        Icon(
-                          Icons.edit,
-                          color: primaryTextColor,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: secondaryTextColor,
-                        width: 0.5,
                       ),
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Log out",
-                        style: secondaryTextStyle.copyWith(
-                          fontSize: 16,
-                          fontWeight: bold,
-                        ),
+                      const SizedBox(
+                        height: 18,
                       ),
-                      Icon(
-                        Icons.logout_outlined,
-                        color: Colors.red.shade300,
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Colors.grey.shade200,
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Log out",
+                              style: secondaryTextStyle.copyWith(
+                                fontSize: 16,
+                                fontWeight: bold,
+                              ),
+                            ),
+                            Icon(
+                              Icons.logout_outlined,
+                              color: Colors.red.shade300,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
