@@ -87,12 +87,12 @@ class _EditProfileState extends State<EditProfile> {
           icon: const Icon(Icons.arrow_back_ios),
         ),
         title: const Text(
-          'Edit Profile',
+          'Profile Settings',
         ),
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(
-          vertical: 28,
+          vertical: 60,
           horizontal: 28,
         ),
         child: Form(
