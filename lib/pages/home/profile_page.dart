@@ -66,13 +66,13 @@ class ProfilePage extends StatelessWidget {
                   Text(
                     user.name,
                     style: headerTextStyle.copyWith(
-                      fontSize: 32,
+                      fontSize: 28,
                       fontWeight: bold,
                       color: Colors.white,
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   Container(
                     width: 120,
@@ -189,31 +189,36 @@ class ProfilePage extends StatelessWidget {
                       const SizedBox(
                         height: 18,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Colors.grey.shade200,
-                              width: 0.5,
-                            ),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Log out",
-                              style: secondaryTextStyle.copyWith(
-                                fontSize: 16,
-                                fontWeight: bold,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/sign-in');
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: Colors.grey.shade200,
+                                width: 0.5,
                               ),
                             ),
-                            Icon(
-                              Icons.logout_outlined,
-                              color: Colors.red.shade300,
-                            ),
-                          ],
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Log out",
+                                style: secondaryTextStyle.copyWith(
+                                  fontSize: 16,
+                                  fontWeight: bold,
+                                ),
+                              ),
+                              Icon(
+                                Icons.logout_outlined,
+                                color: Colors.red.shade300,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
