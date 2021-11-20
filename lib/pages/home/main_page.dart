@@ -2,6 +2,7 @@
 
 import 'package:courseku_mobile/pages/home/bookmark_page.dart';
 import 'package:courseku_mobile/pages/home/home_page.dart';
+import 'package:courseku_mobile/pages/home/profile_bar.dart';
 import 'package:courseku_mobile/pages/home/profile_page.dart';
 import 'package:courseku_mobile/pages/home/submit_page.dart';
 import 'package:courseku_mobile/theme.dart';
@@ -80,7 +81,7 @@ class _MainPageState extends State<MainPage> {
           return const SubmitPage();
           break;
         case 3:
-          return ProfilePage();
+          return const ProfileTab();
           break;
         default:
       }
