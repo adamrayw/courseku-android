@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
 
   final String apiUrl = "http://courseku.herokuapp.com/api/home";
   final String apiUrl2 = "http://courseku.herokuapp.com/api/field";
-  final String apiUrl3 = "http://courseku.herokuapp.com/api/carousel-artikel";
 
   Future<List<dynamic>> fetchProg() async {
     final result = await http.get(Uri.parse(apiUrl));
@@ -43,34 +42,6 @@ class _HomePageState extends State<HomePage> {
   Future<List<dynamic>> fetchField() async {
     final result = await http.get(Uri.parse(apiUrl2));
     return json.decode(result.body);
-  }
-
-  String _name(dynamic data) {
-    return data['name'];
-  }
-
-  String _img(dynamic dataImg) {
-    return dataImg['img_url'];
-  }
-
-  String _nameField(dynamic dataField) {
-    return dataField['name'];
-  }
-
-  String _imgField(dynamic dataFImg) {
-    return dataFImg['img_url'];
-  }
-
-  String _slugProg(dynamic dataSlugProg) {
-    return dataSlugProg['slug'];
-  }
-
-  String _slugField(dynamic dataSlugField) {
-    return dataSlugField['slug'];
-  }
-
-  String _slugName(dynamic dataSlugName) {
-    return dataSlugName['name'];
   }
 
   @override
@@ -105,8 +76,8 @@ class _HomePageState extends State<HomePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => TutorialPage(
-                            slug: _slugProg(snapshot.data[index]),
-                            name: _name(snapshot.data[index]),
+                            slug: snapshot.data[index]['slug'],
+                            name: snapshot.data[index]['name'],
                           ),
                         ),
                       );
@@ -127,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.circular(6.0),
                       ),
                       child: Image.network(
-                        _img(snapshot.data[index]),
+                        snapshot.data[index]['img_url'],
                         width: 1,
                       ),
                     ),
@@ -172,8 +143,8 @@ class _HomePageState extends State<HomePage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => FindByField(
-                            slug: _slugField(snapshot.data[index]),
-                            name: _slugName(snapshot.data[index]),
+                            slug: snapshot.data[index]['slug'],
+                            name: snapshot.data[index]['name'],
                           ),
                         ),
                       );
@@ -197,16 +168,14 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.network(
-                            _imgField(snapshot.data[index]),
+                            snapshot.data[index]['img_url'],
                             width: 28,
                           ),
                           const SizedBox(
                             height: 4,
                           ),
                           Text(
-                            _nameField(
-                              snapshot.data[index],
-                            ),
+                            snapshot.data[index]['name'],
                             style: secondaryTextStyle.copyWith(
                               fontSize: 16,
                               fontWeight: medium,
@@ -294,14 +263,7 @@ class _HomePageState extends State<HomePage> {
               items: artikelProvider.artikel
                   .map(
                     (e) => GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailCourse(slug: e.slug),
-                          ),
-                        );
-                      },
+                      onTap: () {},
                       child: Container(
                         padding: const EdgeInsets.only(
                           top: 14,
