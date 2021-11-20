@@ -14,34 +14,10 @@ class TutorialPage extends StatelessWidget {
   const TutorialPage({Key? key, required this.slug, required this.name})
       : super(key: key);
 
-  Future<List<dynamic>> fetchCourse() async {
+  Future fetchCourse() async {
     final result = await http
         .get(Uri.parse("http://courseku.herokuapp.com/api/learn/" + slug));
-    return json.decode(result.body)['tutorial'];
-  }
-
-  String _nameCourse(dynamic dataNameCourse) {
-    return dataNameCourse['name'];
-  }
-
-  String _nameAuthor(dynamic dataNameAuthor) {
-    return dataNameAuthor['author'];
-  }
-
-  String _nameSubmitted(dynamic dataNameSubmitted) {
-    return dataNameSubmitted['submitted_by'];
-  }
-
-  String _nameType(dynamic dataNameType) {
-    return dataNameType['type'];
-  }
-
-  String _nameLevel(dynamic dataNameLevel) {
-    return dataNameLevel['level'];
-  }
-
-  String _nameSlug(dynamic dataNameSlug) {
-    return dataNameSlug['slug'];
+    return json.decode(result.body);
   }
 
   @override
@@ -61,13 +37,13 @@ class TutorialPage extends StatelessWidget {
               ),
               color: Colors.white,
             ),
-            child: FutureBuilder<List<dynamic>>(
+            child: FutureBuilder(
               future: fetchCourse(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
                     // padding: const EdgeInsets.all(8),
-                    itemCount: snapshot.data.length,
+                    itemCount: snapshot.data['tutorial'].length,
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
                         children: [
@@ -81,7 +57,7 @@ class TutorialPage extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => DetailCourse(
-                                    slug: _nameSlug(snapshot.data[index]),
+                                    course: snapshot.data['tutorial'][index],
                                   ),
                                 ),
                               );
@@ -106,9 +82,7 @@ class TutorialPage extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    _nameCourse(
-                                      snapshot.data[index],
-                                    ),
+                                    snapshot.data['tutorial'][index]['name'],
                                     style: headerTextStyle.copyWith(
                                       fontWeight: semiBold,
                                       fontSize: 16,
@@ -120,9 +94,8 @@ class TutorialPage extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        _nameAuthor(
-                                          snapshot.data[index],
-                                        ),
+                                        snapshot.data['tutorial'][index]
+                                            ['author'],
                                         style: secondaryTextStyle.copyWith(
                                           fontSize: 12,
                                         ),
@@ -149,9 +122,8 @@ class TutorialPage extends StatelessWidget {
                                                   BorderRadius.circular(6),
                                             ),
                                             child: Text(
-                                              _nameType(
-                                                snapshot.data[index],
-                                              ),
+                                              snapshot.data['tutorial'][index]
+                                                  ['type'],
                                               style:
                                                   secondaryTextStyle.copyWith(
                                                 fontSize: 10,
@@ -173,9 +145,8 @@ class TutorialPage extends StatelessWidget {
                                                   BorderRadius.circular(6),
                                             ),
                                             child: Text(
-                                              _nameLevel(
-                                                snapshot.data[index],
-                                              ),
+                                              snapshot.data['tutorial'][index]
+                                                  ['level'],
                                               style:
                                                   secondaryTextStyle.copyWith(
                                                 fontSize: 10,
@@ -187,9 +158,8 @@ class TutorialPage extends StatelessWidget {
                                       ),
                                       Text(
                                         "Disubmit Oleh " +
-                                            _nameSubmitted(
-                                              snapshot.data[index],
-                                            ),
+                                            snapshot.data['tutorial'][index]
+                                                ['submitted_by'],
                                         style: secondaryTextStyle.copyWith(
                                           fontSize: 12,
                                         ),
