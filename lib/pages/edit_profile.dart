@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:courseku_mobile/models/user_model.dart';
-import 'package:courseku_mobile/pages/home/profile_page.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
