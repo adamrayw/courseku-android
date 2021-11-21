@@ -1,9 +1,12 @@
 // ignore_for_file: avoid_unnecessary_containers
 
+import 'dart:convert';
+
 import 'package:courseku_mobile/models/user_model.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
 import '../../theme.dart';
 
@@ -15,10 +18,17 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
+  late AuthProvider authProvider = Provider.of(context);
+  late UserModel user = authProvider.user;
+  Future fetchProfile() async {
+    var response = await http.get(Uri.parse(
+        'http://courseku.herokuapp.com/api/profile/' + user.id.toString()));
+
+    return json.decode(response.body);
+  }
+
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of(context);
-    UserModel user = authProvider.user;
     return SafeArea(
       child: Scaffold(
         // appBar: AppBar(
@@ -134,21 +144,167 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: TabBarView(
                         children: [
                           Container(
-                            child: Text(
-                              'Tab Bookmarked',
-                              textAlign: TextAlign.center,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 30,
+                            ),
+                            child: FutureBuilder(
+                              future: fetchProfile(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: snapshot
+                                      .data['data']['bookmarked'].length,
+                                  itemBuilder: (context, index) {
+                                    if (snapshot.hasData) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          snapshot.data['data']['bookmarked']
+                                                          [index]['tutorials']
+                                                      ['name'] !=
+                                                  null
+                                              ? Text(
+                                                  snapshot.data['data']
+                                                          ['bookmarked'][index]
+                                                      ['tutorials']['name'],
+                                                  style:
+                                                      headerTextStyle.copyWith(
+                                                    fontWeight: medium,
+                                                    fontSize: 18,
+                                                  ))
+                                              : Text('No Bookmark'),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return Text('Loading...');
+                                    }
+                                  },
+                                );
+                              },
                             ),
                           ),
                           Container(
-                            child: Text(
-                              'Tab Liked',
-                              textAlign: TextAlign.center,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 30,
+                            ),
+                            child: FutureBuilder(
+                              future: fetchProfile(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      snapshot.data['data']['liked'].length,
+                                  itemBuilder: (context, index) {
+                                    if (snapshot.hasData) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            snapshot.data['data']['liked']
+                                                [index]['tutorial']['name'],
+                                            style: headerTextStyle.copyWith(
+                                              fontWeight: medium,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return Text('Loading...');
+                                    }
+                                  },
+                                );
+                              },
                             ),
                           ),
                           Container(
-                            child: Text(
-                              'Tab Submitted',
-                              textAlign: TextAlign.center,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 30,
+                            ),
+                            child: FutureBuilder(
+                              future: fetchProfile(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      snapshot.data['data']['submitted'].length,
+                                  itemBuilder: (context, index) {
+                                    if (snapshot.hasData) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 6,
+                                                        horizontal: 8),
+                                                margin: const EdgeInsets.only(
+                                                  right: 6,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color: snapshot.data['data']
+                                                                  ['submitted'][
+                                                              index]['status'] ==
+                                                          'Draft'
+                                                      ? Colors.grey
+                                                      : Colors.green,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                child: Text(
+                                                  snapshot.data['data']
+                                                                  ['submitted'][
+                                                              index]['status'] ==
+                                                          'Draft'
+                                                      ? 'Under Review'
+                                                      : 'Approved',
+                                                  style:
+                                                      headerTextStyle.copyWith(
+                                                    fontWeight: medium,
+                                                    fontSize: 10,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              Text(
+                                                snapshot.data['data']
+                                                        ['submitted'][index]
+                                                    ['name'],
+                                                style: headerTextStyle.copyWith(
+                                                  fontWeight: medium,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      );
+                                    } else {
+                                      return Text('Loading...');
+                                    }
+                                  },
+                                );
+                              },
                             ),
                           ),
                         ],
