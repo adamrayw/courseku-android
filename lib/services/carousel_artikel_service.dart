@@ -9,7 +9,7 @@ class CarouselArtikelService {
   String baseUrl = 'http://courseku.herokuapp.com/api';
 
   Future<List<CarouselArtikelModel>> getArtikel() async {
-    var url = '$baseUrl/carousel-artikel';
+    var url = '$baseUrl/carousel';
     var headers = {'Content-Type': 'application/json'};
 
     var response = await http.get(
@@ -20,7 +20,7 @@ class CarouselArtikelService {
     print(response.body);
 
     if (response.statusCode == 200) {
-      List data = jsonDecode(response.body);
+      List data = jsonDecode(response.body)['artikel'];
       List<CarouselArtikelModel> artikels = [];
 
       for (var item in data) {
