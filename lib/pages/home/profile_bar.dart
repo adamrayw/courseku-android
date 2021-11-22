@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:courseku_mobile/models/user_model.dart';
+import 'package:courseku_mobile/pages/edit_profile.dart';
 import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class _ProfileTabState extends State<ProfileTab> {
                   color: primaryTextColor,
                 ),
                 padding: const EdgeInsets.symmetric(
-                  vertical: 26,
+                  vertical: 20,
                   horizontal: 20,
                 ),
                 child: Column(
@@ -85,17 +86,36 @@ class _ProfileTabState extends State<ProfileTab> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              user.name,
-                              style: primaryTextStyle.copyWith(
-                                color: Colors.white,
-                                fontWeight: bold,
-                                fontSize: 24,
-                              ),
+                            Row(
+                              children: [
+                                Text(
+                                  user.name,
+                                  style: primaryTextStyle.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: bold,
+                                    fontSize: 24,
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditProfile(id: user.id),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(
-                              height: 6,
-                            ),
+                            // const SizedBox(
+                            //   height: 6,
+                            // ),
                             Text(
                               'Reputation',
                               style: secondaryTextStyle.copyWith(
@@ -158,28 +178,31 @@ class _ProfileTabState extends State<ProfileTab> {
                                       .data['data']['bookmarked'].length,
                                   itemBuilder: (context, index) {
                                     if (snapshot.hasData) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          snapshot.data['data']['bookmarked']
-                                                          [index]['tutorials']
-                                                      ['name'] !=
-                                                  null
-                                              ? Text(
-                                                  snapshot.data['data']
-                                                          ['bookmarked'][index]
-                                                      ['tutorials']['name'],
-                                                  style:
-                                                      headerTextStyle.copyWith(
-                                                    fontWeight: medium,
-                                                    fontSize: 18,
-                                                  ))
-                                              : Text('No Bookmark'),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                        ],
+                                      return Container(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            snapshot.data['data']['bookmarked']
+                                                            [index]['tutorials']
+                                                        ['name'] !=
+                                                    null
+                                                ? Text(
+                                                    snapshot.data['data']
+                                                                ['bookmarked']
+                                                            [index]['tutorials']
+                                                        ['name'],
+                                                    style: headerTextStyle
+                                                        .copyWith(
+                                                      fontWeight: medium,
+                                                      fontSize: 18,
+                                                    ))
+                                                : const Text('No Bookmark'),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     } else {
                                       return Text('Loading...');
@@ -248,8 +271,22 @@ class _ProfileTabState extends State<ProfileTab> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Row(
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
+                                              Text(
+                                                snapshot.data['data']
+                                                        ['submitted'][index]
+                                                    ['name'],
+                                                style: headerTextStyle.copyWith(
+                                                  fontWeight: medium,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 4,
+                                              ),
                                               Container(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -281,15 +318,6 @@ class _ProfileTabState extends State<ProfileTab> {
                                                     fontSize: 10,
                                                     color: Colors.white,
                                                   ),
-                                                ),
-                                              ),
-                                              Text(
-                                                snapshot.data['data']
-                                                        ['submitted'][index]
-                                                    ['name'],
-                                                style: headerTextStyle.copyWith(
-                                                  fontWeight: medium,
-                                                  fontSize: 18,
                                                 ),
                                               ),
                                             ],
