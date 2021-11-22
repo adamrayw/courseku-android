@@ -11,6 +11,13 @@ class DetailCourse extends StatelessWidget {
   final Map course;
   const DetailCourse({Key? key, required this.course}) : super(key: key);
 
+  Future fetchComments() async {
+    final response = await http.get(Uri.parse(
+        'http://courseku.herokuapp.com/api/course/' + course['slug']));
+
+    return json.decode(response.body);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,8 +120,6 @@ class DetailCourse extends StatelessWidget {
                 width: double.infinity,
                 padding: const EdgeInsets.only(
                   top: 18,
-                  left: 18,
-                  right: 18,
                 ),
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -126,111 +131,199 @@ class DetailCourse extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Author',
-                      style: headerTextStyle.copyWith(
-                        fontSize: 20,
-                        fontWeight: medium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      course['author'],
-                      style: secondaryTextStyle,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      'Deskripsi',
-                      style: headerTextStyle.copyWith(
-                        fontSize: 20,
-                        fontWeight: medium,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Text(
-                      course['description'] ?? '-',
-                      style: secondaryTextStyle,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WebviewCourse(
-                              link: course['source_link'],
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Author',
+                            style: headerTextStyle.copyWith(
+                              fontSize: 20,
+                              fontWeight: medium,
                             ),
                           ),
-                        );
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: primaryTextColor,
-                          borderRadius: BorderRadius.circular(
-                            10,
+                          const SizedBox(
+                            height: 6,
                           ),
-                        ),
-                        child: Text(
-                          'Mulai Belajar',
-                          style: secondaryTextStyle.copyWith(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: bold,
+                          Text(
+                            course['author'],
+                            style: secondaryTextStyle,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Deskripsi',
+                            style: headerTextStyle.copyWith(
+                              fontSize: 20,
+                              fontWeight: medium,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            course['description'] ?? '-',
+                            style: secondaryTextStyle,
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WebviewCourse(
+                                    link: course['source_link'],
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: primaryTextColor,
+                                borderRadius: BorderRadius.circular(
+                                  10,
+                                ),
+                              ),
+                              child: Text(
+                                'Mulai Belajar',
+                                style: secondaryTextStyle.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 0.2,
+                                color: secondaryTextColor,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 16,
                     ),
                     Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 0.2,
-                          color: secondaryTextColor,
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: Text(
+                        course['comments'].length.toString() + ' Comments',
+                        style: headerTextStyle.copyWith(
+                          fontSize: 20,
                         ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      course['comments'].length.toString() + ' Comments',
-                      style: headerTextStyle.copyWith(
-                        fontSize: 20,
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: course['comments'].length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              course['comments'][index]['comment'].toString(),
-                              style: secondaryTextStyle,
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            )
-                          ],
-                        );
-                      },
+                    Expanded(
+                      // height: 100,
+                      child: FutureBuilder(
+                        future: fetchComments(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  snapshot.data['datas'][0]['comments'].length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 18),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: 40,
+                                            height: 40,
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 12,
+                                              horizontal: 15,
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: secondaryTextColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                snapshot.data['datas'][0]
+                                                        ['comments'][index]
+                                                    ['user']['name'][0],
+                                                style: headerTextStyle,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                snapshot.data['datas'][0]
+                                                        ['comments'][index]
+                                                    ['user']['name'],
+                                                style: headerTextStyle.copyWith(
+                                                  fontWeight: medium,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                snapshot.data['datas'][0]
+                                                        ['comments'][index]
+                                                        ['comment']
+                                                    .toString(),
+                                                style:
+                                                    secondaryTextStyle.copyWith(
+                                                  fontSize: 11,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 14,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          } else {
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                              ),
+                              child: Text(
+                                'Loading Komentar...',
+                                style: secondaryTextStyle,
+                              ),
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ],
                 ),
