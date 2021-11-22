@@ -15,7 +15,6 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     getInit();
-
     super.initState();
   }
 
@@ -35,7 +34,7 @@ class _SplashPageState extends State<SplashPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'COURSEKU',
+                'KURSUSIN',
                 style: GoogleFonts.poppins(
                   fontSize: 46,
                   fontWeight: FontWeight.bold,
@@ -46,7 +45,7 @@ class _SplashPageState extends State<SplashPage> {
                 height: 8,
               ),
               Text(
-                'The best place to find Programming courses & tutorials',
+                'Tempat terbaik untuk mencari kursus pemrograman & design',
                 style: secondaryTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: light,
