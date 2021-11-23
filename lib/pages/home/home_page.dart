@@ -52,8 +52,8 @@ class _HomePageState extends State<HomePage> {
         Provider.of<CarouselArtikelProvider>(context);
 
     Widget programmingCarousel() {
-      return SizedBox(
-        height: 154,
+      return Container(
+        height: 180,
         // color: Colors.amber,
         child: FutureBuilder<List<dynamic>>(
           future: fetchProg(),
@@ -286,8 +286,9 @@ class _HomePageState extends State<HomePage> {
                           child: Stack(
                             fit: StackFit.expand,
                             children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              ListView(
+                                // crossAxisAlignment: CrossAxisAlignment.start,
+                                physics:  const NeverScrollableScrollPhysics(),
                                 children: [
                                   Text(
                                     e.name,
