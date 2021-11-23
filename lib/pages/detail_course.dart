@@ -128,8 +128,8 @@ class DetailCourse extends StatelessWidget {
                     topRight: Radius.circular(16),
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -230,8 +230,8 @@ class DetailCourse extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Expanded(
-                      // height: 100,
+                    Container(
+                      height: 100,
                       child: FutureBuilder(
                         future: fetchComments(),
                         builder:
@@ -244,7 +244,8 @@ class DetailCourse extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 18),
+                                    horizontal: 18,
+                                  ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
