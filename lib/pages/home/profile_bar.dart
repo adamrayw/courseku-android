@@ -336,8 +336,8 @@ class _ProfileTabState extends State<ProfileTab> {
                                                                 [
                                                                 index]['status'] ==
                                                             'Draft'
-                                                        ? 'Under Review'
-                                                        : 'Approved',
+                                                        ? 'Sedang direview'
+                                                        : 'Disetujui',
                                                     style: headerTextStyle
                                                         .copyWith(
                                                       fontWeight: medium,
