@@ -12,7 +12,9 @@ import 'package:http/http.dart' as http;
 
 class EditProfile extends StatefulWidget {
   final int id;
-  const EditProfile({Key? key, required this.id}) : super(key: key);
+  final String name;
+  const EditProfile({Key? key, required this.id, required this.name})
+      : super(key: key);
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -34,7 +36,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Widget nameInput() {
     return TextFormField(
-      controller: nameController,
+      controller: nameController..text = widget.name,
       decoration: InputDecoration(
         hintText: 'Nama Lengkap',
         border: OutlineInputBorder(
@@ -86,7 +88,7 @@ class _EditProfileState extends State<EditProfile> {
           icon: const Icon(Icons.arrow_back_ios),
         ),
         title: const Text(
-          'Profile Settings',
+          'Edit Profile',
         ),
       ),
       body: Container(
