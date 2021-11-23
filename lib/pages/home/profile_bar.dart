@@ -40,8 +40,12 @@ class _ProfileTabState extends State<ProfileTab> {
             children: [
               Container(
                 height: 195,
-                decoration: BoxDecoration(
-                  color: primaryTextColor,
+                decoration: const BoxDecoration(
+                  // color: primaryTextColor,
+                  image: DecorationImage(
+                    image: AssetImage('assets/background_carousel.png'),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 padding: const EdgeInsets.symmetric(
                   vertical: 20,
@@ -88,12 +92,16 @@ class _ProfileTabState extends State<ProfileTab> {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  user.name,
-                                  style: primaryTextStyle.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: bold,
-                                    fontSize: 24,
+                                Container(
+                                  width: 160,
+                                  child: Text(
+                                    user.name,
+                                    style: primaryTextStyle.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: bold,
+                                      fontSize: 24,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                                 IconButton(
@@ -101,8 +109,10 @@ class _ProfileTabState extends State<ProfileTab> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditProfile(id: user.id),
+                                        builder: (context) => EditProfile(
+                                          id: user.id,
+                                          name: user.name,
+                                        ),
                                       ),
                                     );
                                   },
@@ -164,10 +174,6 @@ class _ProfileTabState extends State<ProfileTab> {
                       child: TabBarView(
                         children: [
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 30,
-                            ),
                             child: FutureBuilder(
                               future: fetchProfile(),
                               builder: (BuildContext context,
@@ -179,6 +185,11 @@ class _ProfileTabState extends State<ProfileTab> {
                                   itemBuilder: (context, index) {
                                     if (snapshot.hasData) {
                                       return Container(
+                                        padding: const EdgeInsets.only(
+                                          top: 16,
+                                          right: 30,
+                                          left: 30,
+                                        ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -205,7 +216,12 @@ class _ProfileTabState extends State<ProfileTab> {
                                         ),
                                       );
                                     } else {
-                                      return Text('Loading...');
+                                      return Container(
+                                        width: 200,
+                                        height: 600,
+                                        color: Colors.red,
+                                        child: const Text('Loading...'),
+                                      );
                                     }
                                   },
                                 );
@@ -213,10 +229,6 @@ class _ProfileTabState extends State<ProfileTab> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 30,
-                            ),
                             child: FutureBuilder(
                               future: fetchProfile(),
                               builder: (BuildContext context,
@@ -227,22 +239,29 @@ class _ProfileTabState extends State<ProfileTab> {
                                       snapshot.data['data']['liked'].length,
                                   itemBuilder: (context, index) {
                                     if (snapshot.hasData) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            snapshot.data['data']['liked']
-                                                [index]['tutorial']['name'],
-                                            style: headerTextStyle.copyWith(
-                                              fontWeight: medium,
-                                              fontSize: 18,
+                                      return Container(
+                                        padding: const EdgeInsets.only(
+                                          top: 16,
+                                          right: 30,
+                                          left: 30,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              snapshot.data['data']['liked']
+                                                  [index]['tutorial']['name'],
+                                              style: headerTextStyle.copyWith(
+                                                fontWeight: medium,
+                                                fontSize: 18,
+                                              ),
                                             ),
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                        ],
+                                            const SizedBox(
+                                              height: 2,
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     } else {
                                       return Text('Loading...');
@@ -253,10 +272,6 @@ class _ProfileTabState extends State<ProfileTab> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 30,
-                            ),
                             child: FutureBuilder(
                               future: fetchProfile(),
                               builder: (BuildContext context,
@@ -267,65 +282,77 @@ class _ProfileTabState extends State<ProfileTab> {
                                       snapshot.data['data']['submitted'].length,
                                   itemBuilder: (context, index) {
                                     if (snapshot.hasData) {
-                                      return Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                snapshot.data['data']
-                                                        ['submitted'][index]
-                                                    ['name'],
-                                                style: headerTextStyle.copyWith(
-                                                  fontWeight: medium,
-                                                  fontSize: 18,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                height: 4,
-                                              ),
-                                              Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 6,
-                                                        horizontal: 8),
-                                                margin: const EdgeInsets.only(
-                                                  right: 6,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: snapshot.data['data']
-                                                                  ['submitted'][
-                                                              index]['status'] ==
-                                                          'Draft'
-                                                      ? Colors.grey
-                                                      : Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                child: Text(
+                                      return Container(
+                                        padding: const EdgeInsets.only(
+                                          top: 16,
+                                          right: 30,
+                                          left: 30,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
                                                   snapshot.data['data']
-                                                                  ['submitted'][
-                                                              index]['status'] ==
-                                                          'Draft'
-                                                      ? 'Under Review'
-                                                      : 'Approved',
+                                                          ['submitted'][index]
+                                                      ['name'],
                                                   style:
                                                       headerTextStyle.copyWith(
                                                     fontWeight: medium,
-                                                    fontSize: 10,
-                                                    color: Colors.white,
+                                                    fontSize: 18,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
-                                          ),
-                                        ],
+                                                const SizedBox(
+                                                  height: 4,
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 6,
+                                                      horizontal: 8),
+                                                  margin: const EdgeInsets.only(
+                                                    right: 6,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: snapshot.data['data']
+                                                                    [
+                                                                    'submitted']
+                                                                [
+                                                                index]['status'] ==
+                                                            'Draft'
+                                                        ? Colors.grey
+                                                        : Colors.green,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  child: Text(
+                                                    snapshot.data['data'][
+                                                                    'submitted']
+                                                                [
+                                                                index]['status'] ==
+                                                            'Draft'
+                                                        ? 'Under Review'
+                                                        : 'Approved',
+                                                    style: headerTextStyle
+                                                        .copyWith(
+                                                      fontWeight: medium,
+                                                      fontSize: 10,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     } else {
                                       return Text('Loading...');
