@@ -118,9 +118,6 @@ class DetailCourse extends StatelessWidget {
             Expanded(
               child: Container(
                 width: double.infinity,
-                padding: const EdgeInsets.only(
-                  top: 18,
-                ),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -136,6 +133,7 @@ class DetailCourse extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 18),
                           Text(
                             'Author',
                             style: headerTextStyle.copyWith(
