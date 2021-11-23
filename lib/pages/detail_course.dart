@@ -231,7 +231,7 @@ class DetailCourse extends StatelessWidget {
                       height: 10,
                     ),
                     Container(
-                      height: 100,
+                      height: 180,
                       child: FutureBuilder(
                         future: fetchComments(),
                         builder:
