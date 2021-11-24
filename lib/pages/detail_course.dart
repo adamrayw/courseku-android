@@ -1,21 +1,46 @@
 // ignore_for_file: dead_code, deprecated_member_use, prefer_collection_literals, unused_local_variable, prefer_final_fields, must_be_immutable
 
 import 'dart:convert';
+// import 'dart:html';
 
+import 'package:courseku_mobile/models/user_model.dart';
 import 'package:courseku_mobile/pages/webview_course.dart';
+import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
-class DetailCourse extends StatelessWidget {
+class DetailCourse extends StatefulWidget {
   final Map course;
   const DetailCourse({Key? key, required this.course}) : super(key: key);
 
+  @override
+  State<DetailCourse> createState() => _DetailCourseState();
+}
+
+class _DetailCourseState extends State<DetailCourse> {
+  late AuthProvider authProvider = Provider.of(context);
+  late UserModel user = authProvider.user;
+  var isVoted = false;
+  var isBookmarked = false;
+
   Future fetchComments() async {
     final response = await http.get(Uri.parse(
-        'http://courseku.herokuapp.com/api/course/' + course['slug']));
+        'http://courseku.herokuapp.com/api/course/' + widget.course['slug']));
 
     return json.decode(response.body);
+  }
+
+  Future storevote() async {
+    final response = await http.post(
+      Uri.parse('http://courseku.herokuapp.com/api/storevote'),
+      body: {
+        'user_id': user.id,
+        'tutorials_id': widget.course['id'],
+        'vote': 1,
+      },
+    );
   }
 
   @override
@@ -53,7 +78,7 @@ class DetailCourse extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    course['name'],
+                    widget.course['name'],
                     style: headerTextStyle.copyWith(
                       color: Colors.white,
                       fontSize: 24,
@@ -76,7 +101,7 @@ class DetailCourse extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
-                              course['type'],
+                              widget.course['type'],
                               style: secondaryTextStyle.copyWith(
                                 color: primaryTextColor,
                               ),
@@ -95,7 +120,7 @@ class DetailCourse extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
-                              course['level'],
+                              widget.course['level'],
                               style: secondaryTextStyle.copyWith(
                                 color: primaryTextColor,
                               ),
@@ -104,7 +129,7 @@ class DetailCourse extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        'Disubmit oleh ' + course['submitted_by'],
+                        'Disubmit oleh ' + widget.course['submitted_by'],
                         style: secondaryTextStyle,
                       ),
                     ],
@@ -134,19 +159,108 @@ class DetailCourse extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 18),
-                          Text(
-                            'Author',
-                            style: headerTextStyle.copyWith(
-                              fontSize: 20,
-                              fontWeight: medium,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            course['author'],
-                            style: secondaryTextStyle,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Author',
+                                    style: headerTextStyle.copyWith(
+                                      fontSize: 20,
+                                      fontWeight: medium,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 6,
+                                  ),
+                                  Text(
+                                    widget.course['author'],
+                                    style: secondaryTextStyle,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        if (isVoted == false) {
+                                          isVoted = true;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              content: Text(
+                                                'Course disukai',
+                                                style:
+                                                    secondaryTextStyle.copyWith(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              backgroundColor: primaryTextColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          isVoted = false;
+                                        }
+                                      });
+                                    },
+                                    icon: Icon(
+                                      (isVoted)
+                                          ? Icons.thumb_up
+                                          : Icons.thumb_up_alt_outlined,
+                                      color: primaryTextColor,
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        if (isBookmarked == true) {
+                                          isBookmarked = false;
+                                        } else {
+                                          isBookmarked = true;
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              behavior:
+                                                  SnackBarBehavior.floating,
+                                              content: Text(
+                                                'Course di bookmark',
+                                                style:
+                                                    secondaryTextStyle.copyWith(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              backgroundColor: primaryTextColor,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      });
+                                    },
+                                    icon: Icon(
+                                      (isBookmarked)
+                                          ? Icons.bookmark_add
+                                          : Icons.bookmark_add_outlined,
+                                      color: primaryTextColor,
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                           const SizedBox(
                             height: 20,
@@ -162,7 +276,7 @@ class DetailCourse extends StatelessWidget {
                             height: 6,
                           ),
                           Text(
-                            course['description'] ?? '-',
+                            widget.course['description'] ?? '-',
                             style: secondaryTextStyle,
                           ),
                           const SizedBox(
@@ -174,7 +288,7 @@ class DetailCourse extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WebviewCourse(
-                                    link: course['source_link'],
+                                    link: widget.course['source_link'],
                                   ),
                                 ),
                               );
@@ -219,7 +333,8 @@ class DetailCourse extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 18),
                       child: Text(
-                        course['comments'].length.toString() + ' Comments',
+                        widget.course['comments'].length.toString() +
+                            ' Comments',
                         style: headerTextStyle.copyWith(
                           fontSize: 20,
                         ),
