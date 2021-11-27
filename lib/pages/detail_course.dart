@@ -1,4 +1,4 @@
-// ignore_for_file: dead_code, deprecated_member_use, prefer_collection_literals, unused_local_variable, prefer_final_fields, must_be_immutable
+// ignore_for_file: dead_code, deprecated_member_use, prefer_collection_literals, unused_local_variable, prefer_final_fields, must_be_immutable, prefer_typing_uninitialized_variables, unused_element
 
 import 'dart:convert';
 // import 'dart:html';
@@ -20,10 +20,12 @@ class DetailCourse extends StatefulWidget {
 }
 
 class _DetailCourseState extends State<DetailCourse> {
-  late AuthProvider authProvider = Provider.of(context);
+  late AuthProvider authProvider = Provider.of(context, listen: false);
   late UserModel user = authProvider.user;
   var isVoted = false;
   var isBookmarked = false;
+  var iconVote = Icons.thumb_up_alt_outlined;
+  var iconBook;
 
   Future fetchComments() async {
     final response = await http.get(Uri.parse(
@@ -36,15 +38,120 @@ class _DetailCourseState extends State<DetailCourse> {
     final response = await http.post(
       Uri.parse('http://courseku.herokuapp.com/api/storevote'),
       body: {
-        'user_id': user.id,
-        'tutorials_id': widget.course['id'],
-        'vote': 1,
+        'user_id': user.id.toString(),
+        'tutorials_id': widget.course['id'].toString(),
+        'vote': "1",
       },
+    );
+  }
+
+  Future removevote() async {
+    final response = await http.delete(
+      Uri.parse(
+        'http://courseku.herokuapp.com/api/' +
+            widget.course['id'].toString() +
+            '/' +
+            user.id.toString(),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i < widget.course['votes'].length; i++) {
+      // ignore: curly_braces_in_flow_control_structures
+      if (widget.course['votes'][i]['user_id'] == user.id) {
+        iconVote = Icons.thumb_up_alt;
+        isVoted = true;
+      }
+    }
+
+    // Widget ifVoted() {
+    //   return IconButton(
+    //     onPressed: () {
+    //       setState(() {
+    //         if (isVoted == true) {
+    //           isVoted = false;
+    //           iconVote = Icons.thumb_up_alt_outlined;
+    //         }
+    //       });
+    //       removevote();
+    //     },
+    //     icon: Icon(
+    //       iconVote,
+    //       color: primaryTextColor,
+    //       size: 30.0,
+    //     ),
+    //   );
+    // }
+
+    Widget ifVoted() {
+      return IconButton(
+        onPressed: () {
+          setState(() {
+            if (isVoted == true) {
+              isVoted = false;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(
+                    'Course tidak disukai',
+                    style: secondaryTextStyle.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  backgroundColor: primaryTextColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              );
+              removevote();
+            }
+          });
+        },
+        icon: Icon(
+          iconVote,
+          color: primaryTextColor,
+          size: 30.0,
+        ),
+      );
+    }
+
+    Widget ifNotVoted() {
+      return IconButton(
+        onPressed: () {
+          setState(() {
+            if (isVoted == false) {
+              isVoted = true;
+              iconVote = Icons.thumb_up_alt;
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(
+                    'Course disukai',
+                    style: secondaryTextStyle.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                  backgroundColor: primaryTextColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              );
+              storevote();
+            }
+          });
+        },
+        icon: Icon(
+          iconVote,
+          color: primaryTextColor,
+          size: 30.0,
+        ),
+      );
+    }
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryTextColor,
@@ -184,43 +291,7 @@ class _DetailCourseState extends State<DetailCourse> {
                               ),
                               Row(
                                 children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        if (isVoted == false) {
-                                          isVoted = true;
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              behavior:
-                                                  SnackBarBehavior.floating,
-                                              content: Text(
-                                                'Course disukai',
-                                                style:
-                                                    secondaryTextStyle.copyWith(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              backgroundColor: primaryTextColor,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                            ),
-                                          );
-                                        } else {
-                                          isVoted = false;
-                                        }
-                                      });
-                                    },
-                                    icon: Icon(
-                                      (isVoted)
-                                          ? Icons.thumb_up
-                                          : Icons.thumb_up_alt_outlined,
-                                      color: primaryTextColor,
-                                      size: 30.0,
-                                    ),
-                                  ),
+                                  isVoted ? ifVoted() : ifNotVoted(),
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
