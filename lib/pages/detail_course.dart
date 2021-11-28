@@ -3,13 +3,10 @@
 import 'dart:convert';
 // import 'dart:html';
 
-import 'package:courseku_mobile/models/user_model.dart';
 import 'package:courseku_mobile/pages/webview_course.dart';
-import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class DetailCourse extends StatefulWidget {
   final Map course;
