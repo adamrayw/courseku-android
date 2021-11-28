@@ -1,22 +1,34 @@
 // ignore_for_file: avoid_unnecessary_containers, unused_import
 import 'dart:convert';
+import 'package:courseku_mobile/models/user_model.dart';
+import 'package:courseku_mobile/providers/auth_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:courseku_mobile/widgets/list_tutorials.dart';
 import 'package:flutter/material.dart';
 import 'package:courseku_mobile/theme.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'detail_course.dart';
 
-class TutorialPage extends StatelessWidget {
+class TutorialPage extends StatefulWidget {
   final String slug;
   final String name;
-  final String apiUrl = "http://courseku.herokuapp.com/api/learn/";
+
   const TutorialPage({Key? key, required this.slug, required this.name})
       : super(key: key);
 
+  @override
+  State<TutorialPage> createState() => _TutorialPageState();
+}
+
+class _TutorialPageState extends State<TutorialPage> {
+  final String apiUrl = "http://courseku.herokuapp.com/api/learn/";
+  late AuthProvider authProvider = Provider.of(context);
+  late UserModel user = authProvider.user;
+
   Future fetchCourse() async {
-    final result = await http
-        .get(Uri.parse("http://courseku.herokuapp.com/api/learn/" + slug));
+    final result = await http.get(
+        Uri.parse("http://courseku.herokuapp.com/api/learn/" + widget.slug));
     return json.decode(result.body);
   }
 
@@ -58,9 +70,12 @@ class TutorialPage extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder: (context) => DetailCourse(
                                     course: snapshot.data['tutorial'][index],
+                                    user: user.id,
                                   ),
                                 ),
-                              );
+                              ).then((value) {
+                                setState(() {});
+                              });
                             },
                             child: Container(
                               padding: const EdgeInsets.all(
@@ -231,7 +246,7 @@ class TutorialPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Learn $name',
+                              'Learn ${widget.name}',
                               style: headerTextStyle.copyWith(
                                 fontSize: 28,
                                 fontWeight: bold,
@@ -239,7 +254,7 @@ class TutorialPage extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              "Mari belajar $name, kursus ini di kirim oleh berbagai user",
+                              "Mari belajar ${widget.name}, kursus ini di kirim oleh berbagai user",
                               style: secondaryTextStyle.copyWith(
                                 fontSize: 14,
                                 color: Colors.white,
