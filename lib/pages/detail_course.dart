@@ -23,10 +23,14 @@ class _DetailCourseState extends State<DetailCourse> {
   initState() {
     super.initState();
     checkIfVoted();
+    checkifBookmarked();
   }
 
   bool _isVoted = false;
   var _iconVote = Icons.thumb_up_alt_outlined;
+
+  bool _isSaved = false;
+  var _iconSave = Icons.bookmark_add_outlined;
 
   checkIfVoted() {
     for (var i = 0; i < widget.course['votes'].length; i++) {
@@ -36,6 +40,18 @@ class _DetailCourseState extends State<DetailCourse> {
         _iconVote = Icons.thumb_up_alt;
       } else {
         _isVoted = false;
+      }
+    }
+  }
+
+  checkifBookmarked() {
+    for (var i = 0; i < widget.course['saves'].length; i++) {
+      // ignore: curly_braces_in_flow_control_structures
+      if (widget.course['saves'][0]['user_id'] == widget.user) {
+        _isSaved = true;
+        _iconSave = Icons.bookmark_add;
+      } else {
+        _isSaved = false;
       }
     }
   }
@@ -63,6 +79,30 @@ class _DetailCourseState extends State<DetailCourse> {
     final response = await http.delete(
       Uri.parse(
         'http://courseku.herokuapp.com/api/' +
+            widget.course['id'].toString() +
+            '/' +
+            widget.user.toString(),
+      ),
+    );
+    return json.encode(response.body);
+  }
+
+  Future storesave() async {
+    final response = await http.post(
+      Uri.parse('http://courseku.herokuapp.com/api/storesave'),
+      body: {
+        'user_id': widget.user.toString(),
+        'tutorials_id': widget.course['id'].toString(),
+        'save': "1",
+      },
+    );
+    return json.encode(response.body);
+  }
+
+  Future removesave() async {
+    final response = await http.delete(
+      Uri.parse(
+        'http://courseku.herokuapp.com/api/save/' +
             widget.course['id'].toString() +
             '/' +
             widget.user.toString(),
@@ -264,16 +304,21 @@ class _DetailCourseState extends State<DetailCourse> {
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
-                                        if (_isVoted == true) {
-                                          _isVoted = false;
-                                          removevote();
+                                        if (_isSaved == true) {
+                                          _isSaved = false;
+                                          _iconSave =
+                                              Icons.bookmark_add_outlined;
+                                          removesave();
                                         } else {
-                                          _isVoted = false;
-
+                                          _isSaved = true;
+                                          _iconSave = Icons.bookmark_add;
+                                          storesave();
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
-                                              duration: Duration(seconds: 1),
+                                              duration: const Duration(
+                                                seconds: 1,
+                                              ),
                                               behavior:
                                                   SnackBarBehavior.floating,
                                               content: Text(
@@ -294,9 +339,7 @@ class _DetailCourseState extends State<DetailCourse> {
                                       });
                                     },
                                     icon: Icon(
-                                      (_isVoted)
-                                          ? Icons.bookmark_add
-                                          : Icons.bookmark_add_outlined,
+                                      _iconSave,
                                       color: primaryTextColor,
                                       size: 30.0,
                                     ),
