@@ -13,19 +13,35 @@ import 'package:provider/provider.dart';
 
 class DetailCourse extends StatefulWidget {
   final Map course;
-  const DetailCourse({Key? key, required this.course}) : super(key: key);
+  final dynamic user;
+  const DetailCourse({Key? key, required this.course, required this.user})
+      : super(key: key);
 
   @override
   State<DetailCourse> createState() => _DetailCourseState();
 }
 
 class _DetailCourseState extends State<DetailCourse> {
-  late AuthProvider authProvider = Provider.of(context, listen: false);
-  late UserModel user = authProvider.user;
-  var isVoted = false;
-  var isBookmarked = false;
-  var iconVote = Icons.thumb_up_alt_outlined;
-  var iconBook;
+  @override
+  initState() {
+    super.initState();
+    checkIfVoted();
+  }
+
+  bool _isVoted = false;
+  var _iconVote = Icons.thumb_up_alt_outlined;
+
+  checkIfVoted() {
+    for (var i = 0; i < widget.course['votes'].length; i++) {
+      // ignore: curly_braces_in_flow_control_structures
+      if (widget.course['votes'][i]['user_id'] == widget.user) {
+        _isVoted = true;
+        _iconVote = Icons.thumb_up_alt;
+      } else {
+        _isVoted = false;
+      }
+    }
+  }
 
   Future fetchComments() async {
     final response = await http.get(Uri.parse(
@@ -38,11 +54,12 @@ class _DetailCourseState extends State<DetailCourse> {
     final response = await http.post(
       Uri.parse('http://courseku.herokuapp.com/api/storevote'),
       body: {
-        'user_id': user.id.toString(),
+        'user_id': widget.user.toString(),
         'tutorials_id': widget.course['id'].toString(),
         'vote': "1",
       },
     );
+    return json.encode(response.body);
   }
 
   Future removevote() async {
@@ -51,107 +68,14 @@ class _DetailCourseState extends State<DetailCourse> {
         'http://courseku.herokuapp.com/api/' +
             widget.course['id'].toString() +
             '/' +
-            user.id.toString(),
+            widget.user.toString(),
       ),
     );
+    return json.encode(response.body);
   }
 
   @override
   Widget build(BuildContext context) {
-    for (var i = 0; i < widget.course['votes'].length; i++) {
-      // ignore: curly_braces_in_flow_control_structures
-      if (widget.course['votes'][i]['user_id'] == user.id) {
-        iconVote = Icons.thumb_up_alt;
-        isVoted = true;
-      }
-    }
-
-    // Widget ifVoted() {
-    //   return IconButton(
-    //     onPressed: () {
-    //       setState(() {
-    //         if (isVoted == true) {
-    //           isVoted = false;
-    //           iconVote = Icons.thumb_up_alt_outlined;
-    //         }
-    //       });
-    //       removevote();
-    //     },
-    //     icon: Icon(
-    //       iconVote,
-    //       color: primaryTextColor,
-    //       size: 30.0,
-    //     ),
-    //   );
-    // }
-
-    Widget ifVoted() {
-      return IconButton(
-        onPressed: () {
-          setState(() {
-            if (isVoted == true) {
-              isVoted = false;
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  content: Text(
-                    'Course tidak disukai',
-                    style: secondaryTextStyle.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                  backgroundColor: primaryTextColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              );
-              removevote();
-            }
-          });
-        },
-        icon: Icon(
-          iconVote,
-          color: primaryTextColor,
-          size: 30.0,
-        ),
-      );
-    }
-
-    Widget ifNotVoted() {
-      return IconButton(
-        onPressed: () {
-          setState(() {
-            if (isVoted == false) {
-              isVoted = true;
-              iconVote = Icons.thumb_up_alt;
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  behavior: SnackBarBehavior.floating,
-                  content: Text(
-                    'Course disukai',
-                    style: secondaryTextStyle.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                  backgroundColor: primaryTextColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              );
-              storevote();
-            }
-          });
-        },
-        icon: Icon(
-          iconVote,
-          color: primaryTextColor,
-          size: 30.0,
-        ),
-      );
-    }
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: primaryTextColor,
@@ -291,17 +215,68 @@ class _DetailCourseState extends State<DetailCourse> {
                               ),
                               Row(
                                 children: [
-                                  isVoted ? ifVoted() : ifNotVoted(),
+                                  Column(
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            if (_isVoted == true) {
+                                              _isVoted = false;
+                                              _iconVote =
+                                                  Icons.thumb_up_alt_outlined;
+                                              removevote();
+                                            } else {
+                                              _isVoted = true;
+                                              _iconVote = Icons.thumb_up_alt;
+                                              storevote();
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  duration: const Duration(
+                                                    seconds: 1,
+                                                  ),
+                                                  behavior:
+                                                      SnackBarBehavior.floating,
+                                                  content: Text(
+                                                    'Course disukai',
+                                                    style: secondaryTextStyle
+                                                        .copyWith(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                  backgroundColor:
+                                                      primaryTextColor,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                          });
+                                        },
+                                        icon: Icon(
+                                          _iconVote,
+                                          color: primaryTextColor,
+                                          size: 30.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
-                                        if (isBookmarked == true) {
-                                          isBookmarked = false;
+                                        if (_isVoted == true) {
+                                          _isVoted = false;
+                                          removevote();
                                         } else {
-                                          isBookmarked = true;
+                                          _isVoted = false;
+
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
+                                              duration: Duration(seconds: 1),
                                               behavior:
                                                   SnackBarBehavior.floating,
                                               content: Text(
@@ -322,7 +297,7 @@ class _DetailCourseState extends State<DetailCourse> {
                                       });
                                     },
                                     icon: Icon(
-                                      (isBookmarked)
+                                      (_isVoted)
                                           ? Icons.bookmark_add
                                           : Icons.bookmark_add_outlined,
                                       color: primaryTextColor,
