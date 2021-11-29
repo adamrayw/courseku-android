@@ -24,7 +24,11 @@ class _DetailCourseState extends State<DetailCourse> {
     super.initState();
     checkIfVoted();
     checkifBookmarked();
+    fetchComments();
   }
+
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController commentController = TextEditingController();
 
   bool _isVoted = false;
   var _iconVote = Icons.thumb_up_alt_outlined;
@@ -47,7 +51,7 @@ class _DetailCourseState extends State<DetailCourse> {
   checkifBookmarked() {
     for (var i = 0; i < widget.course['saves'].length; i++) {
       // ignore: curly_braces_in_flow_control_structures
-      if (widget.course['saves'][0]['user_id'] == widget.user) {
+      if (widget.course['saves'][i]['user_id'] == widget.user) {
         _isSaved = true;
         _iconSave = Icons.bookmark_add;
       } else {
@@ -109,6 +113,15 @@ class _DetailCourseState extends State<DetailCourse> {
       ),
     );
     return json.encode(response.body);
+  }
+
+  Future handleComment() async {
+    final response = await http
+        .post(Uri.parse('http://courseku.herokuapp.com/api/comment'), body: {
+      'users_id': widget.user.toString(),
+      'tutorials_id': widget.course['id'].toString(),
+      'comment': commentController.text,
+    });
   }
 
   @override
@@ -413,103 +426,175 @@ class _DetailCourseState extends State<DetailCourse> {
                           const SizedBox(
                             height: 16,
                           ),
+                          Form(
+                            key: _formKey,
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                bottom: 10,
+                              ),
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                    controller: commentController,
+                                    decoration: InputDecoration(
+                                      label: const Text(
+                                        'Tulis Komentar...',
+                                      ),
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            setState(() {
+                                              handleComment();
+                                              fetchComments();
+                                              commentController.clear();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            });
+                                          }
+                                        },
+                                        icon: const Icon(Icons.send),
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "Komentar tidak boleh kosong!";
+                                      }
+                                      if (value.length < 6) {
+                                        return "Komentar harus lebih dari 6 huruf!";
+                                      }
+
+                                      return null;
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: Text(
-                        widget.course['comments'].length.toString() +
-                            ' Comments',
-                        style: headerTextStyle.copyWith(
-                          fontSize: 20,
-                        ),
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      height: 180,
+                      // height: 250,
                       child: FutureBuilder(
                         future: fetchComments(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
                           if (snapshot.hasData) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount:
-                                  snapshot.data['datas'][0]['comments'].length,
-                              itemBuilder: (context, index) {
-                                return Container(
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 18,
                                   ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: 40,
-                                            height: 40,
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 12,
-                                              horizontal: 15,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: secondaryTextColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(100),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                snapshot.data['datas'][0]
-                                                        ['comments'][index]
-                                                    ['user']['name'][0],
-                                                style: headerTextStyle,
-                                              ),
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                snapshot.data['datas'][0]
-                                                        ['comments'][index]
-                                                    ['user']['name'],
-                                                style: headerTextStyle.copyWith(
-                                                  fontWeight: medium,
-                                                  fontSize: 14,
-                                                ),
-                                              ),
-                                              const SizedBox(height: 4),
-                                              Text(
-                                                snapshot.data['datas'][0]
-                                                        ['comments'][index]
-                                                        ['comment']
-                                                    .toString(),
-                                                style:
-                                                    secondaryTextStyle.copyWith(
-                                                  fontSize: 11,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                      bottom: 18,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {});
+                                      },
+                                      child: Text(
+                                        snapshot.data['datas'][0]['comments']
+                                                .length
+                                                .toString() +
+                                            ' Comments',
+                                        style: headerTextStyle.copyWith(
+                                          fontSize: 20,
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        height: 14,
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                );
-                              },
+                                ),
+                                Container(
+                                  height: 240,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot
+                                        .data['datas'][0]['comments'].length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 18,
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: 40,
+                                                  height: 40,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    vertical: 12,
+                                                    horizontal: 15,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: secondaryTextColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            100),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      snapshot.data['datas'][0]
+                                                                  ['comments']
+                                                              [index]['user']
+                                                          ['name'][0],
+                                                      style: headerTextStyle,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      snapshot.data['datas'][0]
+                                                                  ['comments']
+                                                              [index]['user']
+                                                          ['name'],
+                                                      style: headerTextStyle
+                                                          .copyWith(
+                                                        fontWeight: medium,
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 4),
+                                                    Text(
+                                                      snapshot.data['datas'][0]
+                                                              ['comments']
+                                                              [index]['comment']
+                                                          .toString(),
+                                                      style: secondaryTextStyle
+                                                          .copyWith(
+                                                        fontSize: 11,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 14,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
                             );
                           } else {
                             return Container(
