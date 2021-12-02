@@ -3,7 +3,7 @@
 [COURSEKU](http://courseku.herokuapp.com) will available for mobile.
 
 # Download COURSEKU Mobile
-- Soon!
+- [Courseku App](https://bit.ly/courseku-app)
 
 # UI Design
 You can see the design for COURSEKU Mobile, this design is not finished yet.
