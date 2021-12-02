@@ -34,7 +34,7 @@ class _SplashPageState extends State<SplashPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'KURSUSIN',
+                'COURSEKU',
                 style: GoogleFonts.poppins(
                   fontSize: 46,
                   fontWeight: FontWeight.bold,
