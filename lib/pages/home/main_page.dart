@@ -43,11 +43,11 @@ class _MainPageState extends State<MainPage> {
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/bookmark_icon.png',
+              'assets/explor_icon.png',
               width: 20,
               color: currentIndex == 1 ? primaryTextColor : secondaryTextColor,
             ),
-            label: 'Bookmark',
+            label: 'Explore',
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
