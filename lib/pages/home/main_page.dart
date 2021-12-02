@@ -1,6 +1,6 @@
 // ignore_for_file: dead_code
 
-import 'package:courseku_mobile/pages/home/bookmark_page.dart';
+import 'package:courseku_mobile/pages/home/explore_page.dart';
 import 'package:courseku_mobile/pages/home/home_page.dart';
 import 'package:courseku_mobile/pages/home/profile_bar.dart';
 import 'package:courseku_mobile/pages/home/profile_page.dart';
@@ -75,7 +75,7 @@ class _MainPageState extends State<MainPage> {
           return const HomePage();
           break;
         case 1:
-          return const BookmarkPage();
+          return const ExplorePage();
           break;
         case 2:
           return const SubmitPage();
