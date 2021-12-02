@@ -240,13 +240,13 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Image.asset(
-                      'assets/setting_icon.png',
-                      width: 20,
-                    ),
-                  ),
+                  // IconButton(
+                  //   onPressed: () {},
+                  //   icon: Image.asset(
+                  //     'assets/setting_icon.png',
+                  //     width: 20,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
