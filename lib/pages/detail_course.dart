@@ -445,8 +445,8 @@ class _DetailCourseState extends State<DetailCourse> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             setState(() {
-                                              handleComment();
                                               fetchComments();
+                                              handleComment();
                                               commentController.clear();
                                               FocusManager.instance.primaryFocus
                                                   ?.unfocus();
