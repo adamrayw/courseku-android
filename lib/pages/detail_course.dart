@@ -445,11 +445,11 @@ class _DetailCourseState extends State<DetailCourse> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             setState(() {
-                                              fetchComments();
                                               handleComment();
                                               commentController.clear();
                                               FocusManager.instance.primaryFocus
                                                   ?.unfocus();
+                                              fetchComments();
                                             });
                                           }
                                         },
