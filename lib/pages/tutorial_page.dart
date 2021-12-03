@@ -22,7 +22,6 @@ class TutorialPage extends StatefulWidget {
 }
 
 class _TutorialPageState extends State<TutorialPage> {
-  final String apiUrl = "http://courseku.herokuapp.com/api/learn/";
   late AuthProvider authProvider = Provider.of(context);
   late UserModel user = authProvider.user;
 
