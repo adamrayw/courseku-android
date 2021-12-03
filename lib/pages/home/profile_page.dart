@@ -151,12 +151,13 @@ class ProfilePage extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EditProfile(id: user.id),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         EditProfile(id: user.id, name: user.name),
+                          //   ),
+                          // );
                         },
                         child: Container(
                           padding: const EdgeInsets.only(bottom: 10),

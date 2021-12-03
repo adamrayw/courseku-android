@@ -72,6 +72,7 @@ flutter:
     - assets/profile_icon.png
     - assets/setting_icon.png
     - assets/background_carousel.png
+    - assets/explor_icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
