@@ -170,7 +170,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       ],
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height,
+                      height: 500,
                       child: TabBarView(
                         children: [
                           Container(
@@ -178,12 +178,12 @@ class _ProfileTabState extends State<ProfileTab> {
                               future: fetchProfile(),
                               builder: (BuildContext context,
                                   AsyncSnapshot snapshot) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: snapshot
-                                      .data['data']['bookmarked'].length,
-                                  itemBuilder: (context, index) {
-                                    if (snapshot.hasData) {
+                                if (snapshot.hasData) {
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot
+                                        .data['data']['bookmarked'].length,
+                                    itemBuilder: (context, index) {
                                       return Container(
                                         padding: const EdgeInsets.only(
                                           top: 16,
@@ -212,19 +212,30 @@ class _ProfileTabState extends State<ProfileTab> {
                                             const SizedBox(
                                               height: 10,
                                             ),
+                                            
                                           ],
                                         ),
                                       );
-                                    } else {
-                                      return Container(
-                                        width: 200,
-                                        height: 600,
-                                        color: Colors.red,
-                                        child: const Text('Loading...'),
-                                      );
-                                    }
-                                  },
-                                );
+                                    },
+                                  );
+                                } else {
+                                  return Container(
+                                    // width: 200,
+                                    // height: 500,
+                                    margin: const EdgeInsets.only(
+                                      top: 60,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: const [
+                                        CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
                               },
                             ),
                           ),
@@ -233,12 +244,12 @@ class _ProfileTabState extends State<ProfileTab> {
                               future: fetchProfile(),
                               builder: (BuildContext context,
                                   AsyncSnapshot snapshot) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      snapshot.data['data']['liked'].length,
-                                  itemBuilder: (context, index) {
-                                    if (snapshot.hasData) {
+                                if (snapshot.hasData) {
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount:
+                                        snapshot.data['data']['liked'].length,
+                                    itemBuilder: (context, index) {
                                       return Container(
                                         padding: const EdgeInsets.only(
                                           top: 16,
@@ -260,14 +271,30 @@ class _ProfileTabState extends State<ProfileTab> {
                                             const SizedBox(
                                               height: 2,
                                             ),
+                                            
                                           ],
                                         ),
                                       );
-                                    } else {
-                                      return Text('Loading...');
-                                    }
-                                  },
-                                );
+                                    },
+                                  );
+                                } else {
+                                  return Container(
+                                    // width: 200,
+                                    // height: 500,
+                                    margin: const EdgeInsets.only(
+                                      top: 60,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: const [
+                                        CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
                               },
                             ),
                           ),
@@ -276,12 +303,12 @@ class _ProfileTabState extends State<ProfileTab> {
                               future: fetchProfile(),
                               builder: (BuildContext context,
                                   AsyncSnapshot snapshot) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount:
-                                      snapshot.data['data']['submitted'].length,
-                                  itemBuilder: (context, index) {
-                                    if (snapshot.hasData) {
+                                if (snapshot.hasData) {
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: snapshot
+                                        .data['data']['submitted'].length,
+                                    itemBuilder: (context, index) {
                                       return Container(
                                         padding: const EdgeInsets.only(
                                           top: 16,
@@ -354,11 +381,26 @@ class _ProfileTabState extends State<ProfileTab> {
                                           ],
                                         ),
                                       );
-                                    } else {
-                                      return Text('Loading...');
-                                    }
-                                  },
-                                );
+                                    },
+                                  );
+                                } else {
+                                  return Container(
+                                    // width: 200,
+                                    // height: 500,
+                                    margin: const EdgeInsets.only(
+                                      top: 60,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: const [
+                                        CircularProgressIndicator(
+                                          strokeWidth: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
                               },
                             ),
                           ),
