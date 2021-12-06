@@ -11,8 +11,8 @@ You can see the design for COURSEKU Mobile, this design is not finished yet.
 
 # Changelog
 
-V2.0.0
+## V2.0.0 ##
 - Fix some bugs
 
-V1.0.0
+## V1.0.0 ##
 -
