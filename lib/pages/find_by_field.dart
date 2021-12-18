@@ -119,10 +119,17 @@ class FindByField extends StatelessWidget {
                 } else {
                   return Container(
                     width: double.infinity,
-                    margin: const EdgeInsets.only(left: 18, top: 4),
-                    child: Text(
-                      'Loading...',
-                      style: secondaryTextStyle,
+                    // height: 500,
+                    margin: const EdgeInsets.only(
+                      top: 60,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(
+                          strokeWidth: 1,
+                        ),
+                      ],
                     ),
                   );
                 }
@@ -163,27 +170,19 @@ class FindByField extends StatelessWidget {
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
                         margin: const EdgeInsets.symmetric(
                           horizontal: 18,
                         ),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               name,
                               style: headerTextStyle.copyWith(
                                 fontSize: 28,
                                 fontWeight: bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              "Mari belajar $name, kursus ini di kirim oleh berbagai user",
-                              style: secondaryTextStyle.copyWith(
-                                fontSize: 14,
                                 color: Colors.white,
                               ),
                             ),
