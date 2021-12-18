@@ -138,7 +138,7 @@ class _ProfileTabState extends State<ProfileTab> {
                               height: 4,
                             ),
                             Text(
-                              '120 Points',
+                              user.points.toString() + ' Points',
                               style: secondaryTextStyle.copyWith(
                                   // color: Colors.white,
                                   ),
@@ -159,13 +159,13 @@ class _ProfileTabState extends State<ProfileTab> {
                       labelColor: primaryTextColor,
                       tabs: const [
                         Tab(
-                          text: 'Bookmarked',
+                          icon: Icon(Icons.bookmark),
                         ),
                         Tab(
-                          text: 'Liked',
+                          icon: Icon(Icons.thumb_up),
                         ),
                         Tab(
-                          text: 'Submitted',
+                          icon: Icon(Icons.send),
                         ),
                       ],
                     ),
@@ -212,7 +212,6 @@ class _ProfileTabState extends State<ProfileTab> {
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            
                                           ],
                                         ),
                                       );
@@ -271,7 +270,6 @@ class _ProfileTabState extends State<ProfileTab> {
                                             const SizedBox(
                                               height: 2,
                                             ),
-                                            
                                           ],
                                         ),
                                       );
