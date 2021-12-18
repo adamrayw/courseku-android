@@ -191,10 +191,17 @@ class _TutorialPageState extends State<TutorialPage> {
                 } else {
                   return Container(
                     width: double.infinity,
-                    margin: const EdgeInsets.only(left: 18, top: 4),
-                    child: Text(
-                      'Loading...',
-                      style: secondaryTextStyle,
+                    // height: 500,
+                    margin: const EdgeInsets.only(
+                      top: 60,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(
+                          strokeWidth: 1,
+                        ),
+                      ],
                     ),
                   );
                 }
