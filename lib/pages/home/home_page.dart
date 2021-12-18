@@ -107,9 +107,17 @@ class _HomePageState extends State<HomePage> {
               );
             } else {
               return Container(
-                child: Text(
-                  'Loading Data...',
-                  style: secondaryTextStyle,
+                width: double.infinity,
+                // margin: const EdgeInsets.only(
+                //   top: 60,
+                // ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ),
+                  ],
                 ),
               );
             }
@@ -189,9 +197,17 @@ class _HomePageState extends State<HomePage> {
               );
             } else {
               return Container(
-                child: Text(
-                  'Loading Data...',
-                  style: secondaryTextStyle,
+                width: double.infinity,
+                // margin: const EdgeInsets.only(
+                //   top: 60,
+                // ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    CircularProgressIndicator(
+                      strokeWidth: 1,
+                    ),
+                  ],
                 ),
               );
             }
@@ -232,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                         width: 14,
                       ),
                       Text(
-                        'Hello, ${user.name}',
+                        'Hi, ${user.name}',
                         style: primaryTextStyle.copyWith(
                           fontSize: 18,
                           fontWeight: medium,
@@ -288,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                             children: <Widget>[
                               ListView(
                                 // crossAxisAlignment: CrossAxisAlignment.start,
-                                physics:  const NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 children: [
                                   Text(
                                     e.name,
