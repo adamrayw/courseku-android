@@ -22,7 +22,7 @@ class _ExplorePageState extends State<ExplorePage> {
   Future getCourse() async {
     final response =
         await http.get(Uri.parse('http://courseku.herokuapp.com/api/explore'));
-        return json.decode(response.body);
+    return json.decode(response.body);
   }
 
   @override
@@ -184,10 +184,17 @@ class _ExplorePageState extends State<ExplorePage> {
                 } else {
                   return Container(
                     width: double.infinity,
-                    margin: const EdgeInsets.only(left: 18, top: 4),
-                    child: Text(
-                      'Loading...',
-                      style: secondaryTextStyle,
+                    // height: 500,
+                    margin: const EdgeInsets.only(
+                      top: 60,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        CircularProgressIndicator(
+                          strokeWidth: 1,
+                        ),
+                      ],
                     ),
                   );
                 }
